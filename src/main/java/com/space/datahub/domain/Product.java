@@ -13,7 +13,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private double price;
 
     @ManyToOne
     private Type type;
@@ -42,5 +46,13 @@ public class Product {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

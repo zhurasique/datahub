@@ -22,6 +22,7 @@ public class User {
 
     private String roles = "";
 
+    // I have created the field permissions, to develop project in the future, for now it's useless.
     private String permissions = "";
 
     public User(String username, String password, String roles, String permissions){
