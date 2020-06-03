@@ -18,6 +18,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String email;
+
     private int active;
 
     private String roles = "";
@@ -25,9 +28,10 @@ public class User {
     // I have created the field permissions, to develop project in the future, for now it's useless.
     private String permissions = "";
 
-    public User(String username, String password, String roles, String permissions){
+    public User(String username, String password, String email, String roles, String permissions){
         this.username = username;
         this.password = password;
+        this.email = email;
         this.roles = roles;
         this.permissions = permissions;
         this.active = 1;
@@ -71,5 +75,37 @@ public class User {
             return Arrays.asList(this.permissions.split(","));
         }
         return new ArrayList<>();
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
     }
 }
