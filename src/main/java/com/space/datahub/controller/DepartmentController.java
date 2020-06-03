@@ -25,16 +25,6 @@ public class DepartmentController {
         return departmentRepo.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Department department){
-        if(byName(department.getName()) != null)
-            return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
-        else {
-            departmentRepo.save(department);
-            return new ResponseEntity<>(department, HttpStatus.OK);
-        }
-    }
-
     @GetMapping("/name")
     public Department byName(@RequestParam String name){
         Department department = null;
@@ -43,5 +33,15 @@ public class DepartmentController {
             return department;
         }
         return null;
+    }
+
+    @PostMapping
+    public ResponseEntity<?> create(@Valid @RequestBody Department department){
+        if(byName(department.getName()) != null)
+            return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
+        else {
+            departmentRepo.save(department);
+            return new ResponseEntity<>(department, HttpStatus.OK);
+        }
     }
 }
