@@ -5,6 +5,8 @@ import com.space.datahub.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,9 @@ import java.util.List;
 public class RegistrationController {
     private final UserRepo userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     public RegistrationController(UserRepo userRepository, PasswordEncoder passwordEncoder) {
@@ -53,10 +58,25 @@ public class RegistrationController {
     public ResponseEntity<?> create(@Valid @RequestBody User user){
         if(byUsername(user.getUsername()) == null && byEmail(user.getEmail()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles("USER");
+            user.setActive(1);
             userRepository.save(user);
+
+            sendEmail(user.getEmail(), user.getUsername());
+
             return new ResponseEntity<>(user, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    void sendEmail(String email, String username) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+
+        msg.setSubject("Registration on sklepik.pl");
+        msg.setText("Hello, "+ username + "! \nThank you for registration at sklepik.pl");
+
+        javaMailSender.send(msg);
     }
 }
