@@ -35,7 +35,7 @@ public class TypeController {
         return null;
     }
 
-    @GetMapping("/filter/department")
+    @GetMapping("/filter/department/name")
     public Iterable<Type> byType(@RequestParam String department){
         Iterable<Type> types = null;
         if(department != null && !department.isEmpty()) {
@@ -43,6 +43,13 @@ public class TypeController {
             return types;
         }
         return null;
+    }
+
+    @GetMapping("/filter/department/id")
+    public Iterable<Type> byId(@RequestParam long id){
+        Iterable<Type> types = null;
+        types = typeRepo.findByDepartmentId(id);
+        return types;
     }
 
     @PostMapping

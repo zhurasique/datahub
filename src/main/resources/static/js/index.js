@@ -28,3 +28,4 @@ var vue = new Vue({
             this.loadDepartments(this.departments);
         }
 });
+

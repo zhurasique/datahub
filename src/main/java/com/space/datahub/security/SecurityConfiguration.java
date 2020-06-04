@@ -33,12 +33,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // /api/** - any api requests
         http
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/order.html").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/admin.html").hasRole("ADMIN")
-                .antMatchers("/api/department/**").hasRole("ADMIN")
-                .antMatchers("/api/product/**").hasAnyRole("ADMIN", "USER")
-                .and()
+//                .authorizeRequests()
+//                .antMatchers("/order.html").hasAnyRole()
+//                .antMatchers("/admin.html").hasAnyRole()
+//                .antMatchers("/api/department/**").hasAnyRole()
+//                .antMatchers("/api/product/**").hasAnyRole()
+//                .and()
                 .httpBasic();
     }
 
