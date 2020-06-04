@@ -75,7 +75,7 @@ public class RegistrationController {
         msg.setTo(email);
 
         msg.setSubject("Registration on sklepik.pl");
-        msg.setText("Hello, "+ username + "! \nThank you for registration at sklepik.pl");
+        msg.setText("Hi there, "+ username + "! \nThank you for registration at sklepik.pl");
 
         javaMailSender.send(msg);
     }

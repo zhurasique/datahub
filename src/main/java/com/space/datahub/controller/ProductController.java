@@ -35,6 +35,16 @@ public class ProductController {
         return null;
     }
 
+    @GetMapping("/filter/type")
+    public Iterable<Product> byType(@RequestParam String type){
+        Iterable<Product> products = null;
+        if(type != null && !type.isEmpty()) {
+            products = productRepo.findByTypeName(type);
+            return products;
+        }
+        return null;
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Product product){
         productRepo.save(product);

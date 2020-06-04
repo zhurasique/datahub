@@ -35,6 +35,16 @@ public class TypeController {
         return null;
     }
 
+    @GetMapping("/filter/department")
+    public Iterable<Type> byType(@RequestParam String department){
+        Iterable<Type> types = null;
+        if(department != null && !department.isEmpty()) {
+            types = typeRepo.findByDepartmentName(department);
+            return types;
+        }
+        return null;
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Type type){
         if(byName(type.getName()) != null)

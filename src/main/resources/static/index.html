@@ -42,13 +42,8 @@
             </div>
             <div class="block" id="departments">
                 <div v-for="department in departments" :key="department.id">
-                    <div style="position: relative; width: 580px">
-                        <div>
-                            <strong>[{{ department.name }}]</strong>
-                            <ul>
-                                <li><strong>Footprint XX:</strong> {{ department.name }} </li>
-                            </ul>
-                        </div>
+                    <div>
+                        <strong>{{ department.name }}</strong>
                     </div>
                 </div>
             </div>
