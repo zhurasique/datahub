@@ -28,6 +28,7 @@ public class User {
     // I have created the field permissions, to develop project in the future, for now it's useless.
     private String permissions = "";
 
+
     public User(String username, String password, String email, String roles, String permissions){
         this.username = username;
         this.password = password;
@@ -108,4 +109,5 @@ public class User {
     public void setPermissions(String permissions) {
         this.permissions = permissions;
     }
+
 }

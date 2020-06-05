@@ -7,19 +7,21 @@ import javax.persistence.*;
 @Entity
 @Table
 @ToString(of = {"id", "name"})
-public class Category {
+public class Bag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true, nullable = false)
     private String name;
 
     @ManyToOne
-    private Type type;
+    private Product productList;
 
-    protected Category() {}
+    @OneToOne
+    private User user;
+
+    protected Bag() {}
 
     public long getId() {
         return id;
@@ -37,11 +39,19 @@ public class Category {
         this.name = name;
     }
 
-    public Type getType() {
-        return type;
+    public Product getProductList() {
+        return productList;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setProductList(Product productList) {
+        this.productList = productList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
