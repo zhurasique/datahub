@@ -33,7 +33,6 @@ public class BagController {
         } else {
             username = principal.toString();
         }
-        System.out.println(bagRepository.findByUserUsername(username) + "  bagrepo");
         return bagRepository.findByUserUsername(username);
     }
     
@@ -60,15 +59,10 @@ public class BagController {
         if(byUsername(username) == null) {
             bag.setName(username + "_bag");
             bag.setUser(userRepository.findByUsername(username));
-            bag.setProductList(bag.getProductList());
             bagRepository.save(bag);
+            return new ResponseEntity<>(bag, HttpStatus.OK);
         }else{
-            bagRepository.delete(byUsername(username));
-            bag.setName(username + "_bag");
-            bag.setUser(userRepository.findByUsername(username));
-            bag.setProductList(bag.getProductList());
-            bagRepository.save(bag);
+            return new ResponseEntity<>(bag, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

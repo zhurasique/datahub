@@ -58,11 +58,11 @@ public class RegistrationController {
     public ResponseEntity<?> create(@Valid @RequestBody User user){
         if(byUsername(user.getUsername()) == null && byEmail(user.getEmail()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles("USER");
+            user.setRole("USER");
             user.setActive(1);
             userRepository.save(user);
 
-            sendEmail(user.getEmail(), user.getUsername());
+            //sendEmail(user.getEmail(), user.getUsername());
 
             return new ResponseEntity<>(user, HttpStatus.OK);
         }else{

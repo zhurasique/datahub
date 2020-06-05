@@ -15,9 +15,6 @@ public class Bag {
 
     private String name;
 
-    @ManyToOne
-    private Product productList;
-
     @OneToOne
     private User user;
 
@@ -39,13 +36,6 @@ public class Bag {
         this.name = name;
     }
 
-    public Product getProductList() {
-        return productList;
-    }
-
-    public void setProductList(Product productList) {
-        this.productList = productList;
-    }
 
     public User getUser() {
         return user;
