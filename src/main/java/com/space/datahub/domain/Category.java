@@ -7,22 +7,17 @@ import javax.persistence.*;
 @Entity
 @Table
 @ToString(of = {"id", "name"})
-public class Product {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private double price;
-
     @ManyToOne
-    private Category category;
-
-    protected Product() {}
+    private Type type;
 
     public long getId() {
         return id;
@@ -40,19 +35,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public Type getType() {
+        return type;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setType(Type type) {
+        this.type = type;
     }
 }

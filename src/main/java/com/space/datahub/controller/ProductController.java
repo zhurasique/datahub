@@ -35,14 +35,21 @@ public class ProductController {
         return null;
     }
 
-    @GetMapping("/filter/type")
-    public Iterable<Product> byType(@RequestParam String type){
+    @GetMapping("/filter/category/name")
+    public Iterable<Product> byType(@RequestParam String category){
         Iterable<Product> products = null;
-        if(type != null && !type.isEmpty()) {
-            products = productRepo.findByTypeName(type);
+        if(category != null && !category.isEmpty()) {
+            products = productRepo.findByCategoryName(category);
             return products;
         }
         return null;
+    }
+
+    @GetMapping("/filter/category/id")
+    public Iterable<Product> byId(@RequestParam long id){
+        Iterable<Product> products = null;
+        products = productRepo.findByCategoryId(id);
+        return products;
     }
 
     @PostMapping
