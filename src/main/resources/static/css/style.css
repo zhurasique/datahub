@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
 *{
     padding: 0;
     margin: 0;
@@ -7,7 +9,7 @@ body {
     margin: 0;
     height: 100%;
     box-sizing: border-box;
-    font-family: Open Sans,sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 header{
@@ -79,10 +81,10 @@ header{
 }
 
 .department-bar{
-    background:  white;
+    background-color: white;
     max-width: 250px;
-    margin: 10px;
-    padding: 15px;
+    width: 250px;
+    padding: 15px 15px 15px 0;
 }
 
 #font-spacing{
@@ -105,6 +107,7 @@ header{
 }
 
 .department{
+    line-height: 38px   ;
     align-items: center;
     padding-top: 10px;
     max-width: 120px;
@@ -114,3 +117,77 @@ header{
     max-height: 35px;
 }
 
+.department-block{
+    padding-left: 25px;
+    border-left: 2px solid white;
+    text-decoration: none;
+    color: #222;
+}
+
+.department-block:hover, .department-block:focus{
+    cursor: pointer;
+    color: #ff598a;
+    filter: invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%);
+}
+
+.align-items-center{
+    align-items: center;
+}
+
+.department-block img{
+    max-width: 40px;
+    margin-right: 8px;
+}
+
+#departments{
+    padding-top: 15px;
+}
+
+.type-bar{
+    max-width: 900px;
+    width: 900px;
+    background-color: white;
+    display: none;
+    flex-wrap: wrap;
+}
+
+.hello-block{
+    margin: 10px;
+}
+
+#showed-type-category{
+    padding-right: 30px;
+}
+
+#type{
+    margin-top: 15px;
+    font-size: 19px;
+}
+
+#type a{
+    text-decoration: none;
+    color: black;
+    font-weight: 800;
+}
+
+#type a:hover{
+    color: #54cab6
+}
+
+#categories{
+    margin-top: 6px;
+}
+
+#categories a{
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+#categories a:hover{
+    color: #54cab6
+}
+
+#showed-category{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}

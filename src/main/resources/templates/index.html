@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>sklepik.pl - atrakcyjne ceny</title>
+    <link rel='icon' href='favicon.ico' type='image/x-icon'/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-    <link rel='icon' href='../static/favicon.ico' type='image/x-icon'/>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
 <header>
     <div class="flex-space-between header-wrapper">
         <div class="logo-bar">
-            <img src="../static/img/logo_full.png" id="main-logo">
+            <img src="img/logo_full.png" id="main-logo">
         </div>
         <div class="search-bar">
             <form>
@@ -27,23 +27,36 @@
             </form>
         </div>
         <div class="bag-bar">
-            <img src="../static/img/bag.png" id="bag-logo">
+            <img src="img/bag.png" id="bag-logo">
         </div>
         <div class="login-bar">
-            <img src="../static/img/login.png" id="login-logo">
+            <img src="img/login.png" id="login-logo">
         </div>
     </div>
 </header>
-<div class="main" id="app">
+<div class="main">
     <div class="wrapper">
-        <div class="department-bar">
-            <div class="under-border">
-                <p id="font-spacing">Działy</p>
+        <div class="flex hello-block">
+            <div class="department-bar">
+                <div class="under-border">
+                    <p id="font-spacing">Działy</p>
+                </div>
+                <div class="block" id="departments">
+                    <a class="department-block flex align-items-center" name="department" v-for="(department, index) in departments" key="department.id" v-bind:href="links[index]">
+                        <img v-bind:src="images[index]">
+                        {{ department.name }}
+                    </a>
+                </div>
             </div>
-            <div class="block" id="departments">
-                <div v-for="department in departments" :key="department.id">
-                    <div>
-                        <strong>{{ department.name }}</strong>
+            <div class="type-bar" id="types">
+                <div class="block" id="showed-type-category" v-for="type in types" :key="type.id">
+                    <div id="type">
+                        <a href="#" id="showed-type">{{ type.name }}</a>
+                    </div>
+                    <div id="categories">
+                        <div class="block" v-for="category in categories" :key="category.id">
+                            <a href="#" id="showed-category" v-if="type.name == category.type.name">{{ category.name }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,6 +65,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<script src="../static/js/index.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>
