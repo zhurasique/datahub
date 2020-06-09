@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/registration")
-public class RegistrationController {
+@RequestMapping("api/user")
+public class UserController {
     private final UserRepo userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -23,7 +25,7 @@ public class RegistrationController {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    public RegistrationController(UserRepo userRepository, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepo userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -34,7 +36,7 @@ public class RegistrationController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/name")
+    @GetMapping("/filter/name")
     public User byUsername(@RequestParam String username){
         User user = null;
         if(username != null && !username.isEmpty()) {
@@ -44,7 +46,7 @@ public class RegistrationController {
         return null;
     }
 
-    @GetMapping("/email")
+    @GetMapping("/filter/email")
     public User byEmail(@RequestParam String email){
         User user = null;
         if(email != null && !email.isEmpty()) {
@@ -52,6 +54,19 @@ public class RegistrationController {
             return user;
         }
         return null;
+    }
+
+    @GetMapping("/filter/logged")
+    public User getLoggedUser(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        return userRepository.findByUsername(username);
     }
 
     @PostMapping

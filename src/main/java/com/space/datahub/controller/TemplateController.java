@@ -14,6 +14,13 @@ public class TemplateController {
         return modelAndView;
     }
 
+    @RequestMapping("/login")
+    public ModelAndView login () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
     @RequestMapping("/dzial/motoryzacja")
     public ModelAndView cars () {
         ModelAndView modelAndView = new ModelAndView();
