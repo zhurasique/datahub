@@ -32,12 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        // Here we are giving access for user roles to pages.
-        // order.html - page for ordering products
-        // admin.html - page of admin panel
-        // /api/** - any api requests
-
         http
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
@@ -49,16 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
-//        http
-//                .csrf().disable()
-////                .authorizeRequests()
-////                .antMatchers("/order.html").hasAnyRole()
-////                .antMatchers("/admin.html").hasAnyRole()
-////                .antMatchers("/api/department/**").hasAnyRole()
-////                .antMatchers("/api/product/**").hasAnyRole()
-////                .and()
-//                .httpBasic();
     }
 
     @Bean
