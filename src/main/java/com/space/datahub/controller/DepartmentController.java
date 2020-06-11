@@ -13,23 +13,23 @@ import java.util.List;
 @RestController
 @RequestMapping("api/department")
 public class DepartmentController {
-    private final DepartmentRepo departmentRepo;
+    private final DepartmentRepo departmentRepository;
 
     @Autowired
-    public DepartmentController(DepartmentRepo departmentRepo) {
-        this.departmentRepo = departmentRepo;
+    public DepartmentController(DepartmentRepo departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
 
     @GetMapping
     public List<Department> list(){
-        return departmentRepo.findAll();
+        return departmentRepository.findAll();
     }
 
     @GetMapping("/name")
     public Department byName(@RequestParam String name){
         Department department = null;
         if(name != null && !name.isEmpty()) {
-            department = departmentRepo.findByName(name);
+            department = departmentRepository.findByName(name);
             return department;
         }
         return null;
@@ -40,7 +40,7 @@ public class DepartmentController {
         if(byName(department.getName()) != null)
             return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
-            departmentRepo.save(department);
+            departmentRepository.save(department);
             return new ResponseEntity<>(department, HttpStatus.OK);
         }
     }

@@ -20,7 +20,7 @@ public class ProductInBagController {
         this.productInBagRepository = productInBagRepository;
     }
 
-    @GetMapping("/filter/bag")
+    @GetMapping("/bag")
     public Iterable<ProductInBag> byBag(String bag){
         Iterable<ProductInBag> productList = null;
         if(bag != null && !bag.isEmpty()) {
@@ -28,6 +28,11 @@ public class ProductInBagController {
             return productList;
         }
         return null;
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") ProductInBag productInBag){
+        productInBagRepository.delete(productInBag);
     }
 
     @PostMapping

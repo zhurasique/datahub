@@ -13,43 +13,48 @@ import java.util.List;
 @RestController
 @RequestMapping("api/type")
 public class TypeController {
-    private final TypeRepo typeRepo;
+    private final TypeRepo typeRepository;
 
     @Autowired
-    public TypeController(TypeRepo typeRepo) {
-        this.typeRepo = typeRepo;
+    public TypeController(TypeRepo typeRepository) {
+        this.typeRepository = typeRepository;
     }
 
     @GetMapping
     public List<Type> list(){
-        return typeRepo.findAll();
+        return typeRepository.findAll();
     }
 
     @GetMapping("/name")
     public Type byName(@RequestParam String name){
         Type type = null;
         if(name != null && !name.isEmpty()) {
-            type = typeRepo.findByName(name);
+            type = typeRepository.findByName(name);
             return type;
         }
         return null;
     }
 
-    @GetMapping("/filter/department/name")
+    @GetMapping("/department/name")
     public Iterable<Type> byType(@RequestParam String department){
         Iterable<Type> types = null;
         if(department != null && !department.isEmpty()) {
-            types = typeRepo.findByDepartmentName(department);
+            types = typeRepository.findByDepartmentName(department);
             return types;
         }
         return null;
     }
 
-    @GetMapping("/filter/department/id")
+    @GetMapping("/department/id")
     public Iterable<Type> byId(@RequestParam long id){
         Iterable<Type> types = null;
-        types = typeRepo.findByDepartmentId(id);
+        types = typeRepository.findByDepartmentId(id);
         return types;
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Type type){
+        typeRepository.delete(type);
     }
 
     @PostMapping
@@ -57,7 +62,7 @@ public class TypeController {
         if(byName(type.getName()) != null)
             return new ResponseEntity<>(type, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
-            typeRepo.save(type);
+            typeRepository.save(type);
             return new ResponseEntity<>(type, HttpStatus.OK);
         }
     }

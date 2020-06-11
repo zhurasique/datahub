@@ -13,48 +13,53 @@ import java.util.List;
 @RestController
 @RequestMapping("api/product")
 public class ProductController {
-    private final ProductRepo productRepo;
+    private final ProductRepo productRepository;
 
     @Autowired
-    public ProductController(ProductRepo productRepo){
-        this.productRepo = productRepo;
+    public ProductController(ProductRepo productRepository){
+        this.productRepository = productRepository;
     }
 
     @GetMapping
     public List<Product> list(){
-        return productRepo.findAll();
+        return productRepository.findAll();
     }
 
-    @GetMapping("/filter/name")
+    @GetMapping("/name")
     public Iterable<Product> byName(@RequestParam String name){
         Iterable<Product> products = null;
         if(name != null && !name.isEmpty()) {
-            products = productRepo.findByName(name);
+            products = productRepository.findByName(name);
             return products;
         }
         return null;
     }
 
-    @GetMapping("/filter/category/name")
+    @GetMapping("/category/name")
     public Iterable<Product> byType(@RequestParam String category){
         Iterable<Product> products = null;
         if(category != null && !category.isEmpty()) {
-            products = productRepo.findByCategoryName(category);
+            products = productRepository.findByCategoryName(category);
             return products;
         }
         return null;
     }
 
-    @GetMapping("/filter/category/id")
+    @GetMapping("/category/id")
     public Iterable<Product> byId(@RequestParam long id){
         Iterable<Product> products = null;
-        products = productRepo.findByCategoryId(id);
+        products = productRepository.findByCategoryId(id);
         return products;
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Product product){
+        productRepository.delete(product);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Product product){
-        productRepo.save(product);
+        productRepository.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

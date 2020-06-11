@@ -24,7 +24,7 @@ public class BagController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/filter/user")
+    @GetMapping("/user")
     public Bag getBag(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";
@@ -36,7 +36,7 @@ public class BagController {
         return bagRepository.findByUserUsername(username);
     }
     
-    @GetMapping("/filter/name")
+    @GetMapping("/name")
     public Bag byUsername(@RequestParam String name){
         Bag bag = null;
         if(name != null && !name.isEmpty()) {
@@ -44,6 +44,11 @@ public class BagController {
             return bag;
         }
         return null;
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Bag bag){
+        bagRepository.delete(bag);
     }
 
     @PostMapping

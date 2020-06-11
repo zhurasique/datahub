@@ -30,13 +30,12 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // For testing
     @GetMapping
     public List<User> list(){
         return userRepository.findAll();
     }
 
-    @GetMapping("/filter/name")
+    @GetMapping("/name")
     public User byUsername(@RequestParam String username){
         User user = null;
         if(username != null && !username.isEmpty()) {
@@ -46,7 +45,7 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/filter/email")
+    @GetMapping("/email")
     public User byEmail(@RequestParam String email){
         User user = null;
         if(email != null && !email.isEmpty()) {
@@ -56,7 +55,7 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/filter/logged")
+    @GetMapping("/logged")
     public User getLoggedUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";

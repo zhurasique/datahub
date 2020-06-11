@@ -1,6 +1,6 @@
-let departmentApi = "/api/department";
-let typeApi = "/api/type";
-let categoryApi = "/api/category";
+let departmentApi = "/api/department/";
+let typeApi = "/api/type/";
+let categoryApi = "/api/category/";
 
 let chosenDepartmentId;
 let departmentsId = [];
@@ -53,7 +53,7 @@ var types = new Vue({
             this.types = [];
             axios({
                 method: "get",
-                url: typeApi + "filter/department/id?id=" + chosenDepartmentId
+                url: typeApi + "department/id?id=" + chosenDepartmentId
             })
                 .then(response => {
                     this.types = response.data;

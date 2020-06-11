@@ -1,8 +1,12 @@
 package com.space.datahub.domain;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "users")
+@ToString(of = {"id", "name"})
 public class User {
 
     @Id
@@ -22,7 +26,7 @@ public class User {
 
     private String role = "";
 
-    public User(String username, String password, String email, String role, String permissions){
+    public User(String username, String password, String email, String role){
         this.username = username;
         this.password = password;
         this.email = email;
