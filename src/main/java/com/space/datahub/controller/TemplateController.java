@@ -32,6 +32,13 @@ public class TemplateController implements ErrorController {
         return modelAndView;
     }
 
+    @RequestMapping("/registration")
+    public ModelAndView registration () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("registration");
+        return modelAndView;
+    }
+
     @RequestMapping("/dzial/motoryzacja")
     public ModelAndView cars () {
         ModelAndView modelAndView = new ModelAndView();
