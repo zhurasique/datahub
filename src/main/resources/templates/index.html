@@ -16,7 +16,8 @@
 <header>
     <div class="flex-space-between header-wrapper">
         <div class="logo-bar">
-            <img src="img/logo_full.png" id="main-logo">
+            <h1>SKLEPIK</h1>
+            
         </div>
         <div class="search-bar">
             <form>
@@ -59,9 +60,9 @@
                         <a href="#" id="showed-type">{{ type.name }}</a>
                     </div>
                     <div id="categories">
-                        <div class="block" v-for="category in categories" :key="category.id">
-                            <a href="#" id="showed-category" v-if="type.name == category.type.name">{{ category.name }}</a>
-                        </div>
+                        <a class="block" v-for="category in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name">
+                            {{ category.name }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -71,5 +72,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="js/index.js"></script>
+<script src="js/loginCheck.js"></script>
 </body>
 </html>

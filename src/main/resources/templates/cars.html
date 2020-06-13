@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>sklepik.pl - atrakcyjne ceny</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon'/>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../css/cars.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 </head>
@@ -16,7 +17,8 @@
 <header>
     <div class="flex-space-between header-wrapper">
         <div class="logo-bar">
-            <img src="img/logo_full.png" id="main-logo">
+            <h1>SKLEPIK</h1>
+
         </div>
         <div class="search-bar">
             <form>
@@ -27,13 +29,40 @@
             </form>
         </div>
         <div class="bag-bar">
-            <img src="img/bag.png" id="bag-logo">
+            <img src="../img/bag.png" id="bag-logo">
         </div>
-        <div class="login-bar">
-            <img src="img/login.png" id="login-logo">
+        <div class="login-bar" id="user">
+            <img src="../img/login.png" id="login-logo">
+            <p v-if="typeof user.username !== 'undefined'">Cześć, {{ user.username }}!</p>
+            <div v-else>
+                <a href="/login">Logowanie </a>
+                /<a href="/registration"> Rejestracja</a>
+            </div>
         </div>
     </div>
 </header>
 
+<div class="main">
+    <div class="wrapper" id="types">
+        <h1>{{ departmentName }}</h1>
+        <div class="type-bar">
+            <div class="block" id="showed-type-category" v-for="(type, index) in types" :key="type.id">
+                <a href="#" id="type">
+                    <img v-bind:src="images[index]">
+                    <p id="showed-type">{{ type.name }}</p>
+                </a>
+                <div id="categories">
+                    <a class="block" v-for="category in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name">
+                        {{ category.name }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script src="../js/cars.js"></script>
+<script src="../js/loginCheck.js"></script>
 </body>
 </html>

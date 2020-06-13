@@ -1,0 +1,46 @@
+.type-bar{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#showed-type-category{
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    font-size: 18px;
+    max-width: 400px;
+    width: 400px;
+}
+
+#showed-category{
+    text-decoration: none;
+    color: #006456;
+}
+
+#showed-category:hover{
+    text-decoration: none;
+    color: #00a790;
+}
+
+#type{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-weight: 800;
+}
+
+#type img{
+    max-width: 65px;
+    padding-right: 15px;
+    line-height: 30px;
+}
+
+#categories{
+    padding-top: 10px;
+}
+
+#types h1{
+    padding: 10px 0px 10px 30px;
+    letter-spacing: 2px;
+}
