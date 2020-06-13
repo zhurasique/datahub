@@ -18,6 +18,11 @@ public class Department {
 
     protected Department() {}
 
+    public Department(long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

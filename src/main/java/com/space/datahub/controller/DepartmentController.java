@@ -2,6 +2,7 @@ package com.space.datahub.controller;
 
 import com.space.datahub.domain.Department;
 import com.space.datahub.repo.DepartmentRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/department")
 public class DepartmentController {
+
     private final DepartmentRepo departmentRepository;
 
     @Autowired
