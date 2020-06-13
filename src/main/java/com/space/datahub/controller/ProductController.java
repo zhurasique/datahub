@@ -1,7 +1,7 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Product;
-import com.space.datahub.repo.ProductRepo;
+import com.space.datahub.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,53 +13,46 @@ import java.util.List;
 @RestController
 @RequestMapping("api/product")
 public class ProductController {
-    private final ProductRepo productRepository;
+    private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductRepo productRepository){
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService){
+        this.productService = productService;
     }
 
     @GetMapping
     public List<Product> list(){
-        return productRepository.findAll();
+        return productService.findAll();
     }
 
     @GetMapping("/name")
-    public Iterable<Product> byName(@RequestParam String name){
-        Iterable<Product> products = null;
+    public Product byName(@RequestParam String name){
         if(name != null && !name.isEmpty()) {
-            products = productRepository.findByName(name);
-            return products;
+            return productService.findByName(name);
         }
         return null;
     }
 
     @GetMapping("/category/name")
-    public Iterable<Product> byType(@RequestParam String category){
-        Iterable<Product> products = null;
-        if(category != null && !category.isEmpty()) {
-            products = productRepository.findByCategoryName(category);
-            return products;
-        }
+    public List<Product> byType(@RequestParam String category){
+        if(category != null && !category.isEmpty())
+            return productService.findByCategoryName(category);
         return null;
     }
 
     @GetMapping("/category/id")
-    public Iterable<Product> byId(@RequestParam long id){
-        Iterable<Product> products = null;
-        products = productRepository.findByCategoryId(id);
-        return products;
+    public List<Product> byId(@RequestParam long id){
+        return productService.findByCategoryId(id);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Product product){
-        productRepository.delete(product);
+        productService.delete(product);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Product product){
-        productRepository.save(product);
+        productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

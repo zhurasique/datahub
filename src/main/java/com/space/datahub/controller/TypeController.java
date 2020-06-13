@@ -1,7 +1,7 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Type;
-import com.space.datahub.repo.TypeRepo;
+import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,48 +13,47 @@ import java.util.List;
 @RestController
 @RequestMapping("api/type")
 public class TypeController {
-    private final TypeRepo typeRepository;
+
+    private final TypeService typeService;
 
     @Autowired
-    public TypeController(TypeRepo typeRepository) {
-        this.typeRepository = typeRepository;
+    public TypeController(TypeService typeService) {
+        this.typeService = typeService;
     }
 
     @GetMapping
     public List<Type> list(){
-        return typeRepository.findAll();
+        return typeService.findAll();
     }
 
     @GetMapping("/name")
     public Type byName(@RequestParam String name){
         Type type = null;
         if(name != null && !name.isEmpty()) {
-            type = typeRepository.findByName(name);
+            type = typeService.findByName(name);
             return type;
         }
         return null;
     }
 
     @GetMapping("/department/name")
-    public Iterable<Type> byType(@RequestParam String department){
-        Iterable<Type> types = null;
+    public List<Type> byType(@RequestParam String department){
+        List<Type> types = null;
         if(department != null && !department.isEmpty()) {
-            types = typeRepository.findByDepartmentName(department);
+            types = typeService.findByDepartmentName(department);
             return types;
         }
         return null;
     }
 
     @GetMapping("/department/id")
-    public Iterable<Type> byId(@RequestParam long id){
-        Iterable<Type> types = null;
-        types = typeRepository.findByDepartmentId(id);
-        return types;
+    public List<Type> byId(@RequestParam long id){
+        return typeService.findByDepartmentId(id);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Type type){
-        typeRepository.delete(type);
+        typeService.delete(type);
     }
 
     @PostMapping
@@ -62,7 +61,7 @@ public class TypeController {
         if(byName(type.getName()) != null)
             return new ResponseEntity<>(type, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
-            typeRepository.save(type);
+            typeService.save(type);
             return new ResponseEntity<>(type, HttpStatus.OK);
         }
     }

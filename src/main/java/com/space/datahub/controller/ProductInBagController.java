@@ -12,8 +12,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("api/productinbag")
 public class ProductInBagController {
-    private final ProductInBagRepo productInBagRepository;
 
+    private final ProductInBagRepo productInBagRepository;
 
     @Autowired
     public ProductInBagController(ProductInBagRepo productInBagRepository) {

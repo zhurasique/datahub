@@ -1,8 +1,7 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Department;
-import com.space.datahub.repo.DepartmentRepo;
-
+import com.space.datahub.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,25 +14,22 @@ import java.util.List;
 @RequestMapping("api/department")
 public class DepartmentController {
 
-    private final DepartmentRepo departmentRepository;
+    private final DepartmentService departmentService;
 
     @Autowired
-    public DepartmentController(DepartmentRepo departmentRepository) {
-        this.departmentRepository = departmentRepository;
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
     @GetMapping
     public List<Department> list(){
-        return departmentRepository.findAll();
+        return departmentService.findAll();
     }
 
     @GetMapping("/name")
     public Department byName(@RequestParam String name){
-        Department department = null;
-        if(name != null && !name.isEmpty()) {
-            department = departmentRepository.findByName(name);
-            return department;
-        }
+        if(name != null && !name.isEmpty())
+            return departmentService.findByName(name);
         return null;
     }
 
@@ -42,7 +38,7 @@ public class DepartmentController {
         if(byName(department.getName()) != null)
             return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
-            departmentRepository.save(department);
+            departmentService.save(department);
             return new ResponseEntity<>(department, HttpStatus.OK);
         }
     }
