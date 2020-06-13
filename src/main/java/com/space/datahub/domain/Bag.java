@@ -36,7 +36,6 @@ public class Bag {
         this.name = name;
     }
 
-
     public User getUser() {
         return user;
     }

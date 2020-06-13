@@ -195,3 +195,16 @@ header{
 .i404{
     max-width: 900px;
 }
+
+#user{
+    text-align: center;
+}
+
+#user a{
+    text-decoration: none;
+    color: black;
+}
+
+#user a:hover{
+    color: #dda5e4;
+}

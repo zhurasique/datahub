@@ -1,10 +1,10 @@
 let departmentApi = "/api/department/";
 let typeApi = "/api/type/";
 let categoryApi = "/api/category/";
+let userApi = "/api/user/"
 
 let chosenDepartmentId;
 let departmentsId = [];
-let memory;
 
 var departments = new Vue({
     el: "#departments",
@@ -80,6 +80,33 @@ var types = new Vue({
     }
 });
 
+var user = new Vue({
+    el: "#user",
+    data: function(){
+        return {
+            user : ''
+        }
+    },
+
+    methods: {
+        loadUser: function () {
+            this.user = '';
+            axios({
+                method: "get",
+                url: userApi + "logged"
+            })
+                .then(response => {
+                    this.user = response.data;
+                }).catch(error => {
+                console.log(error);
+            });
+        }
+    },
+    created: function () {
+        this.loadUser(this.user);
+    }
+});
+
 
 document.addEventListener('DOMContentLoaded', function(){
     setTimeout(function() {
@@ -88,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
         for (let i = 0; i < departments.length; i++) {
             departments[i].addEventListener('mouseover', function()  {
-                memory = departments[i];
                 chosenDepartmentId = departmentsId[i].id;
                 types.loadTypes();
                 types.loadCategories();

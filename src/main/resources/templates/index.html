@@ -29,8 +29,13 @@
         <div class="bag-bar">
             <img src="img/bag.png" id="bag-logo">
         </div>
-        <div class="login-bar">
+        <div class="login-bar" id="user">
             <img src="img/login.png" id="login-logo">
+            <p v-if="typeof user.username !== 'undefined'">Cześć, {{ user.username }}!</p>
+            <div v-else>
+                <a href="/login">Logowanie </a>
+                /<a href="/registration"> Rejestracja</a>
+            </div>
         </div>
     </div>
 </header>
