@@ -34,8 +34,15 @@
         </div>
     </div>
 </header>
+<div class="main">
+    <div class="wrapper" id="products">
+        <div class="block" id="showed-type-category" v-for="(product, index) in products" :key="product.id">
+            {{ product.name }}
+        </div>
+    </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<script src="js/type.js"></script>
+<script src="js/products.js"></script>
 </body>
 </html>

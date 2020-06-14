@@ -47,12 +47,12 @@
         <h1>{{ departmentName }}</h1>
         <div class="type-bar">
             <div class="block" id="showed-type-category" v-for="(type, index) in types" :key="type.id">
-                <a href="#" id="type">
+                <a v-bind:href="types_links[index]" id="type">
                     <img v-bind:src="images[index]">
                     <p id="showed-type">{{ type.name }}</p>
                 </a>
                 <div id="categories">
-                    <a class="block" v-for="category in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name">
+                    <a class="block" v-for="(category, index) in categories" :key="category.id"  id="showed-category" v-if="type.name == category.type.name" v-bind:href="categories_links[index]">
                         {{ category.name }}
                     </a>
                 </div>

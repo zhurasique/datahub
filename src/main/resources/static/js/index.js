@@ -1,7 +1,6 @@
 let departmentApi = "/api/department/";
 let typeApi = "/api/type/";
 let categoryApi = "/api/category/";
-let userApi = "/api/user/"
 
 let chosenDepartmentId;
 let departmentsId = [];

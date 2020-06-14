@@ -16,6 +16,8 @@ public class Department {
     @Column(unique = true, nullable = false)
     private String name;
 
+    private String image;
+
     protected Department() {}
 
     public Department(long id, String name){
@@ -37,5 +39,13 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

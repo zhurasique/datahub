@@ -67,10 +67,17 @@ public class TemplateController implements ErrorController {
         return modelAndView;
     }
 
-    @RequestMapping("/type")
+    @RequestMapping("/products")
     public ModelAndView type () {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("type");
+        modelAndView.setViewName("products");
+        return modelAndView;
+    }
+
+    @RequestMapping("/admin")
+    public ModelAndView admin () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 }

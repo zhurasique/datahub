@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+<body>
+
+<style>
+    select{
+        min-width: 130px;
+        min-height: 20px;
+    }
+
+    h2{
+        margin-top: 15px;
+    }
+
+    .block{
+        display: block;
+        border: 1px solid;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+    .flex{
+        display: flex;
+        max-width: 2000px;
+        margin: auto;
+        justify-content: space-around;
+    }
+
+    .center{
+        text-align: center;
+    }
+
+    .flexed{
+        max-width: 800px;
+    }
+
+
+</style>
+
+<h1 style="text-align: center">Space Agency Data Hub</h1>
+
+<div class="flex">
+    <div class="flexed">
+        <div class="block" id="department">
+            <h2 class="center">Departments</h2>
+            <div id="dep">
+                <input type="text" placeholder="Name" v-model="department_name" />
+                <input type="text" placeholder="Image" v-model="department_image" />
+                <input type="button" value="Save" @click="saveDepartment" style="margin-left: 5px;"/>
+            </div>
+            <div v-for="department in departments" :key="department.id">
+                <div style="position: relative; width: 580px">
+                    <div style="margin-top: 20px;">
+                        <strong>[{{ department.name }}]</strong>
+                        <span style="position: absolute; right: 0">
+                           <input type="button" value="X" @click="delDepartment(department)"/>
+                        </span>
+                        <ul>
+                            <li><strong>ID:</strong> {{ department.id }}</li>
+                            <li><strong>Name:</strong> {{ department.name }}</li>
+                            <li><strong>Image:</strong> {{ department.image }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block" id="types">
+            <h2 class="center">Types</h2>
+            <div id="products">
+                <div>
+                    <select v-model="type_department" style="margin-left: 5px;">
+                        <option v-for="department in departments" :key="department.id" v-bind:value="department">{{ department.name }}</option>
+                    </select>
+                    <input type="text" placeholder="Name" v-model="type_name" style="margin-left: 5px;"/>
+                    <input type="text" placeholder="Image" v-model="type_image" style="margin-left: 5px;"/>
+                    <input type="button" value="Save" @click="saveType" style="margin-left: 5px;"/>
+                </div>
+                <div v-for="type in types" :key="type.id">
+                    <div style="position: relative; width: 580px">
+                        <div style="margin-top: 20px;">
+                            <strong>[{{ type.name }}]</strong>
+                            <span style="position: absolute; right: 0"><input type="button" value="X" @click="delType(type)"/></span>
+                            <ul>
+                                <li><strong>ID: </strong> {{ type.id }} </li>
+                                <li><strong>Name:</strong> {{ type.name }} </li>
+                                <li><strong>Department name:</strong> {{ type.department.name }} </li>
+                                <li><strong>Image:</strong> {{ type.image }} </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+let userApi = "/api/user/";
+
 var user = new Vue({
     el: "#user",
     data: function(){

@@ -9,7 +9,9 @@ var types = new Vue({
             types: [],
             categories: [],
             images: [],
-            departmentName: departmentName
+            departmentName: departmentName,
+            types_links : [],
+            categories_links : []
         }
     },
 
@@ -24,7 +26,7 @@ var types = new Vue({
                     this.types = response.data;
                     for(let i = 0; i < this.types.length; i++) {
                         this.images.push("../img/" + this.types[i].name.toLocaleLowerCase().trim().replace(/ /g,"-") + ".jpg");
-                        //this.links.push("/dzial/" + this.types[i].name.toLocaleLowerCase().trim().replace(/ /g,"-"))
+                        this.types_links.push("/products?type=" + this.types[i].name)
                     }
                 }).catch(error => {
                 console.log(error);
@@ -38,6 +40,9 @@ var types = new Vue({
             })
                 .then(response => {
                     this.categories = response.data;
+                    for(let i = 0; i < this.categories.length; i++) {
+                        this.categories_links.push("/products?category=" + this.categories[i].name)
+                    }
                 }).catch(error => {
                 console.log(error);
             });

@@ -1,6 +1,8 @@
 package com.space.datahub.controller;
 
+import com.space.datahub.domain.Category;
 import com.space.datahub.domain.Product;
+import com.space.datahub.service.CategoryService;
 import com.space.datahub.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,16 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/product")
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService, CategoryService categoryService){
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -29,6 +34,18 @@ public class ProductController {
     public Product byName(@RequestParam String name){
         if(name != null && !name.isEmpty()) {
             return productService.findByName(name);
+        }
+        return null;
+    }
+
+    @GetMapping("/type/name")
+    public List<Product> byTypeS(@RequestParam String type){
+        if(type != null && !type.isEmpty()) {
+            List<Category> categoryList = categoryService.findByTypeName(type);
+            List<Product> productsList = new ArrayList<>();
+            for(int i = 0; i < categoryList.size(); i++)
+                productsList.addAll(productService.findByCategoryName(categoryList.get(i).getName()));
+            return productsList;
         }
         return null;
     }

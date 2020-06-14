@@ -22,7 +22,7 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
-    implementation('org.postgresql:postgresql')
+    runtimeOnly 'com.h2database:h2'
     compile('org.projectlombok:lombok')
     implementation 'org.springframework.boot:spring-boot-starter-security'
     compile('javax.xml.bind:jaxb-api')

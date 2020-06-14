@@ -16,6 +16,8 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
+    private String image;
+
     @ManyToOne
     private Type type;
 
@@ -43,5 +45,13 @@ public class Category {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
