@@ -13,10 +13,10 @@ public class TemplateController implements ErrorController {
         return "/error";
     }
 
-    @RequestMapping("/error")
-    public String handleError() {
-        return "404";
-    }
+//    @RequestMapping("/error")
+//    public String handleError() {
+//        return "404";
+//    }
 
     @RequestMapping("/")
     public ModelAndView index () {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Data Hub</title>
@@ -52,7 +52,7 @@
             <h2 class="center">Departments</h2>
             <div id="dep">
                 <input type="text" placeholder="Name" v-model="department_name" />
-                <input type="text" placeholder="Image" v-model="department_image" />
+                <input type="file" ref="file" v-on:change="handleFileUpload()" />
                 <input type="button" value="Save" @click="saveDepartment" style="margin-left: 5px;"/>
             </div>
             <div v-for="department in departments" :key="department.id">

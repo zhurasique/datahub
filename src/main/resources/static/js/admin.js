@@ -7,7 +7,7 @@ var department = new Vue({
         return {
             departments : [],
             department_name: '',
-            department_image: ''
+            file: ''
         }
     },
 
@@ -39,22 +39,30 @@ var department = new Vue({
             });
         },
 
-        saveDepartment: function() {
-            axios({
-                method: "post",
-                url: departmentApi,
-                data: {
-                    name: this.department_name,
-                    image:  this.department_image
+            saveDepartment: function() {
+            let formData = new FormData();
+            formData.append("name", this.department_name);
+            formData.append('image', this.file);
+
+            axios.post( departmentApi,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
+            ).then(function(){
+                console.log('SUCCESS!!');
             })
-                .then(response => {
-                    this.departments.push(response.data);
-                    type.loadTypes();
-                }).catch(error => {
-                console.log(error);
-            });
+                .catch(function(){
+                    console.log('FAILURE!!');
+                });
         },
+
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0];
+            console.log('>>>> 1st element in files array >>>> ', this.file);
+        }
     },
 
     created: function() {

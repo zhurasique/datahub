@@ -13,12 +13,11 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true, nullable = false)
     private String name;
 
     private String image;
 
-    protected Department() {}
+    public Department() {}
 
     public Department(long id, String name){
         this.id = id;

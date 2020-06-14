@@ -3,18 +3,25 @@ package com.space.datahub.controller;
 import com.space.datahub.domain.Department;
 import com.space.datahub.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/department")
 public class DepartmentController {
 
     private final DepartmentService departmentService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     public DepartmentController(DepartmentService departmentService) {
@@ -34,7 +41,23 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Department department){
+    public ResponseEntity<?> create(@RequestParam String name,
+                                    @RequestParam("image")MultipartFile image) throws IOException {
+        Department department = new Department();
+        department.setName(name);
+
+        if(image != null){
+            File uploadDir = new File(uploadPath);
+
+            if(!uploadDir.exists()){
+                uploadDir.mkdir();
+            }
+            String resultFileName = UUID.randomUUID().toString() + "." + image.getOriginalFilename();
+            image.transferTo(new File(uploadPath + "/" + resultFileName));
+
+            department.setImage(resultFileName);
+        }
+
         if(byName(department.getName()) != null)
             return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
