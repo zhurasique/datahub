@@ -1,8 +1,8 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Bag;
-import com.space.datahub.repo.BagRepo;
-import com.space.datahub.repo.UserRepo;
+import com.space.datahub.service.BagService;
+import com.space.datahub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +15,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("api/bag")
 public class BagController {
-    private final BagRepo bagRepository;
-    private final UserRepo userRepository;
+    private final BagService bagService;
+    private final UserService userService;
 
     @Autowired
-    public BagController(BagRepo bagRepository, UserRepo userRepository) {
-        this.bagRepository = bagRepository;
-        this.userRepository = userRepository;
+    public BagController(BagService bagService, UserService userService) {
+        this.bagService = bagService;
+        this.userService = userService;
     }
 
     @GetMapping("/user")
@@ -33,14 +33,15 @@ public class BagController {
         } else {
             username = principal.toString();
         }
-        return bagRepository.findByUserUsername(username);
+
+        return bagService.findByUserUsername(username);
     }
     
     @GetMapping("/name")
     public Bag byUsername(@RequestParam String name){
         Bag bag = null;
         if(name != null && !name.isEmpty()) {
-            bag = bagRepository.findByName(name);
+            bag = bagService.findByName(name);
             return bag;
         }
         return null;
@@ -48,7 +49,7 @@ public class BagController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Bag bag){
-        bagRepository.delete(bag);
+        bagService.delete(bag);
     }
 
     @PostMapping
@@ -63,8 +64,8 @@ public class BagController {
 
         if(byUsername(username) == null) {
             bag.setName(username + "_bag");
-            bag.setUser(userRepository.findByUsername(username));
-            bagRepository.save(bag);
+            bag.setUser(userService.findByUsername(username));
+            bagService.save(bag);
             return new ResponseEntity<>(bag, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(bag, HttpStatus.INTERNAL_SERVER_ERROR);

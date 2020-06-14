@@ -1,7 +1,7 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.User;
-import com.space.datahub.repo.UserRepo;
+import com.space.datahub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,28 +23,28 @@ import java.util.List;
 @RestController
 @RequestMapping("api/user")
 public class UserController {
-    private final UserRepo userRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
-    public UserController(UserRepo userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
     public List<User> list(){
-        return userRepository.findAll();
+        return userService.findAll();
     }
 
     @GetMapping("/name")
     public User byUsername(@RequestParam String username){
         User user = null;
         if(username != null && !username.isEmpty()) {
-            user = userRepository.findByUsername(username);
+            user = userService.findByUsername(username);
             return user;
         }
         return null;
@@ -54,7 +54,7 @@ public class UserController {
     public User byEmail(@RequestParam String email){
         User user = null;
         if(email != null && !email.isEmpty()) {
-            user = userRepository.findByEmail(email);
+            user = userService.findByEmail(email);
             return user;
         }
         return null;
@@ -70,7 +70,7 @@ public class UserController {
             username = principal.toString();
         }
 
-        return userRepository.findByUsername(username);
+        return userService.findByUsername(username);
     }
 
     @GetMapping("/logout")
@@ -89,7 +89,7 @@ public class UserController {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole("USER");
             user.setActive(1);
-            userRepository.save(user);
+            userService.save(user);
 
             //sendEmail(user.getEmail(), user.getUsername());
 

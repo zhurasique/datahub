@@ -1,43 +1,42 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.ProductInBag;
-import com.space.datahub.repo.ProductInBagRepo;
+import com.space.datahub.service.ProductInBagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/productinbag")
 public class ProductInBagController {
 
-    private final ProductInBagRepo productInBagRepository;
+    private final ProductInBagService productInBagService;
 
     @Autowired
-    public ProductInBagController(ProductInBagRepo productInBagRepository) {
-        this.productInBagRepository = productInBagRepository;
+    public ProductInBagController(ProductInBagService productInBagService) {
+        this.productInBagService = productInBagService;
     }
 
     @GetMapping("/bag")
-    public Iterable<ProductInBag> byBag(String bag){
-        Iterable<ProductInBag> productList = null;
+    public List<ProductInBag> byBag(String bag){
         if(bag != null && !bag.isEmpty()) {
-            productList = productInBagRepository.findByBagName(bag);
-            return productList;
+            return productInBagService.findByBagName(bag);
         }
         return null;
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") ProductInBag productInBag){
-        productInBagRepository.delete(productInBag);
+        productInBagService.delete(productInBag);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ProductInBag productInBag){
-        productInBagRepository.save(productInBag);
+        productInBagService.save(productInBag);
         return new ResponseEntity<>(productInBag, HttpStatus.OK);
     }
 }
