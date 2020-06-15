@@ -15,6 +15,10 @@ public class ProductImageService {
         this.productImageRepository = productImageRepository;
     }
 
+    public List<ProductImage> findAll(){
+        return productImageRepository.findAll();
+    }
+
     public List<ProductImage> findByProductName(String name){
         return productImageRepository.findByProductName(name);
     }

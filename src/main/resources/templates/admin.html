@@ -74,7 +74,7 @@
 
         <div class="block" id="type">
             <h2 class="center">Types</h2>
-            <div id="products">
+            <div>
                 <div>
                     <select v-model="type_department" style="margin-left: 5px;">
                         <option v-for="department in departments" :key="department.id" v-bind:value="department">{{ department.name }}</option>
@@ -120,6 +120,37 @@
                                 <li><strong>Name:</strong> {{ category.name }} </li>
                                 <li><strong>Department name:</strong> {{ category.type.department.name }} </li>
                                 <li><strong>Type name:</strong> {{ category.type.name }} </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block" id="product">
+            <h2 class="center">Products</h2>
+            <div id="products">
+                <div>
+                    <select v-model="product_category" style="margin-left: 5px;">
+                        <option v-for="category in categories" :key="category.id" v-bind:value="category">{{ category.name }}</option>
+                    </select>
+                    <input type="text" placeholder="Name" v-model="product_name" style="margin-left: 5px;"/>
+                    <input type="text" placeholder="Price" v-model="product_price" style="margin-left: 5px;"/>
+                    <input type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()"/>
+                    <input type="button" value="Save" @click="saveProduct" style="margin-left: 5px;"/>
+                </div>
+                <div v-for="product in products" :key="product.id">
+                    <div style="position: relative; width: 580px">
+                        <div style="margin-top: 20px;">
+                            <strong>[{{ product.name }}]</strong>
+                            <span style="position: absolute; right: 0"><input type="button" value="X" @click="delProduct(product)"/></span>
+                            <ul>
+                                <li><strong>ID: </strong> {{ product.id }} </li>
+                                <li><strong>Name:</strong> {{ product.name }} </li>
+                                <li><strong>Price:</strong> {{ product.price }} </li>
+                                <li><strong>Department name:</strong> {{ product.category.type.department.name }} </li>
+                                <li><strong>Type name:</strong> {{ product.category.type.name }} </li>
+                                <li><strong>Category name:</strong> {{ product.category.name }} </li>
                             </ul>
                         </div>
                     </div>

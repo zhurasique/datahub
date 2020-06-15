@@ -19,7 +19,7 @@ public class ProductImage {
     @ManyToOne
     private Product product;
 
-    protected ProductImage() {}
+    public ProductImage() {}
 
     public long getId() {
         return id;

@@ -22,7 +22,7 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    protected Product() {}
+    public Product() {}
 
     public long getId() {
         return id;

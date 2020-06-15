@@ -1,6 +1,8 @@
 let departmentApi = "/api/department";
 let typeApi = "/api/type";
 let categoryApi = "/api/category";
+let productApi = "/api/product";
+let productImagesApi = "/api/productimage";
 
 var department = new Vue({
     el: "#department",
@@ -229,5 +231,117 @@ var category = new Vue({
 
     created: function() {
         this.loadCategories(this.categories);
+    }
+});
+
+var product = new Vue({
+    el: "#product",
+    data: function(){
+        return {
+            products : [],
+            product_name: '',
+            files: '',
+            product_price: '',
+            product_category: '',
+            categories: [],
+            product_images: ''
+        }
+    },
+
+    methods: {
+        loadCategories: function () {
+            axios({
+                method: "get",
+                url: categoryApi
+            })
+                .then( response => {
+                    this.categories = response.data;
+                    return response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        loadProducts: function () {
+            this.loadCategories();
+            axios({
+                method: "get",
+                url: productApi
+            })
+                .then( response => {
+                    this.products = response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+
+            // axios({
+            //     method: "get",
+            //     url: productImagesApi + "/product?name="
+            // })
+            //     .then( response => {
+            //         this.products = response.data;
+            //     }).
+            // catch( error => {
+            //     console.log(error);
+            // });
+        },
+
+        delProduct: function(product) {
+            axios({
+                method: "delete",
+                url: productApi + "/" + product.id
+            })
+                .then( response => {
+                    this.products.splice(this.products.indexOf(type), 1)
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        saveProduct: function() {
+            let formData = new FormData();
+            formData.append("name", this.product_name);
+            formData.append("price", this.product_price)
+            formData.append("category", this.product_category.name);
+
+            axios.post( productApi,
+                formData,
+            ).then(response => {
+                this.products.push(response.data);
+                this.loadProducts();
+            }).catch(error => {
+                console.log(error);
+            });
+
+            let formDataFiles = new FormData();
+            for( var i = 0; i < this.files.length; i++ ){
+                formDataFiles.append("image", this.files[i]);
+                formDataFiles.append("product", this.product_name);
+                axios.post( productImagesApi,
+                    formDataFiles,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                ).then(function(){
+                    console.log('SUCCESS!!');
+                })
+                    .catch(function(){
+                        console.log('FAILURE!!');
+                    });
+            }
+        },
+
+        handleFilesUpload(){
+            this.files = this.$refs.files.files;
+        }
+    },
+
+    created: function() {
+        this.loadProducts(this.products);
     }
 });

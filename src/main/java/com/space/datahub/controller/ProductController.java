@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +67,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Product product){
+    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String category){
+        Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        product.setCategory(findCat(category));
+
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    public Category findCat(String name){
+        return categoryService.findByName(name);
     }
 }
