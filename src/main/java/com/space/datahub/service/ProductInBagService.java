@@ -9,21 +9,21 @@ import java.util.List;
 
 @Service
 public class ProductInBagService {
-    private final ProductInBagRepo productInBagRepo;
+    private final ProductInBagRepo productInBagRepository;
 
-    public ProductInBagService(ProductInBagRepo productInBagRepo) {
-        this.productInBagRepo =  productInBagRepo;
+    public ProductInBagService(ProductInBagRepo productInBagRepository) {
+        this.productInBagRepository =  productInBagRepository;
     }
 
     public List<ProductInBag> findByBagName(String name){
-        return productInBagRepo.findByBagName(name);
+        return productInBagRepository.findByBagName(name);
     }
 
     public void delete(ProductInBag productInBag){
-        productInBagRepo.delete(productInBag);
+        productInBagRepository.delete(productInBag);
     }
 
     public ProductInBag save(@RequestBody ProductInBag productInBag){
-        return productInBagRepo.save(productInBag);
+        return productInBagRepository.save(productInBag);
     }
 }

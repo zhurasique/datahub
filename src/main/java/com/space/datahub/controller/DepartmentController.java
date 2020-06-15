@@ -42,25 +42,25 @@ public class DepartmentController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestParam String name,
-                                    @RequestParam("image")MultipartFile image) throws IOException {
-        Department department = new Department();
-        department.setName(name);
-
-        if(image != null){
-            File uploadDir = new File(uploadPath);
-
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String resultFileName = UUID.randomUUID().toString() + "." + image.getOriginalFilename();
-            image.transferTo(new File(uploadPath + "/" + resultFileName));
-
-            department.setImage(resultFileName);
-        }
-
-        if(byName(department.getName()) != null)
-            return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
+                                    @RequestParam MultipartFile image) throws IOException {
+        if(byName(name) != null)
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
+            Department department = new Department();
+            department.setName(name);
+
+            if(image != null){
+                File uploadDir = new File(uploadPath);
+
+                if(!uploadDir.exists()){
+                    uploadDir.mkdir();
+                }
+                String resultFileName = UUID.randomUUID().toString() + "." + department.getName() + "." + image.getOriginalFilename();
+                image.transferTo(new File(uploadPath + "/" + resultFileName));
+
+                department.setImage(resultFileName);
+            }
+
             departmentService.save(department);
             return new ResponseEntity<>(department, HttpStatus.OK);
         }

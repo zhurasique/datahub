@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div class="block" id="types">
+        <div class="block" id="type">
             <h2 class="center">Types</h2>
             <div id="products">
                 <div>
@@ -80,7 +80,7 @@
                         <option v-for="department in departments" :key="department.id" v-bind:value="department">{{ department.name }}</option>
                     </select>
                     <input type="text" placeholder="Name" v-model="type_name" style="margin-left: 5px;"/>
-                    <input type="text" placeholder="Image" v-model="type_image" style="margin-left: 5px;"/>
+                    <input type="file" ref="file" v-on:change="handleFileUpload()" />
                     <input type="button" value="Save" @click="saveType" style="margin-left: 5px;"/>
                 </div>
                 <div v-for="type in types" :key="type.id">

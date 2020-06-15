@@ -39,7 +39,7 @@ var department = new Vue({
             });
         },
 
-            saveDepartment: function() {
+        saveDepartment: function() {
             let formData = new FormData();
             formData.append("name", this.department_name);
             formData.append('image', this.file);
@@ -51,12 +51,12 @@ var department = new Vue({
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-            ).then(function(){
-                console.log('SUCCESS!!');
-            })
-                .catch(function(){
-                    console.log('FAILURE!!');
-                });
+            ).then(response => {
+                this.departments.push(response.data);
+                type.loadTypes();
+            }).catch(error => {
+                console.log(error);
+            });
         },
 
         handleFileUpload() {
@@ -71,7 +71,7 @@ var department = new Vue({
 });
 
 var type = new Vue({
-    el: "#types",
+    el: "#type",
     data: function(){
         return {
             types : [],
@@ -125,20 +125,29 @@ var type = new Vue({
         },
 
         saveType: function() {
-            axios({
-                method: "post",
-                url: typeApi,
-                data: {
-                    name: this.type_name,
-                    image:  this.type_image,
-                    department: this.type_department
+            let formData = new FormData();
+                formData.append("name", this.type_name);
+                formData.append("image", this.file);
+                formData.append("department", this.type_department.name);
+
+            axios.post( typeApi,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 }
-            })
-                .then(response => {
-                    this.types.push(response.data);
-                }).catch(error => {
+            ).then(response => {
+                this.types.push(response.data);
+                this.loadTypes();
+            }).catch(error => {
                 console.log(error);
             });
+        },
+
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0];
+            console.log('>>>> 1st element in files array >>>> ', this.file);
         }
     },
 

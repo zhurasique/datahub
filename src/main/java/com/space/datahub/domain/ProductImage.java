@@ -7,21 +7,19 @@ import javax.persistence.*;
 @Entity
 @Table
 @ToString(of = {"id", "name"})
-public class Type {
+public class ProductImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
-    private String name;
-
-    @ManyToOne
-    private Department department;
-
+    @Column(nullable = false)
     private String image;
 
-    public Type() {}
+    @ManyToOne
+    private Product product;
+
+    protected ProductImage() {}
 
     public long getId() {
         return id;
@@ -31,27 +29,19 @@ public class Type {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
