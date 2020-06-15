@@ -1,6 +1,5 @@
 package com.space.datahub.controller;
 
-import com.space.datahub.domain.Department;
 import com.space.datahub.domain.Type;
 import com.space.datahub.service.DepartmentService;
 import com.space.datahub.service.TypeService;
@@ -74,7 +73,7 @@ public class TypeController {
         else {
             Type type = new Type();
             type.setName(name);
-            type.setDepartment(findDep(department));
+            type.setDepartment(departmentService.findByName(department));
 
             if(image != null){
                 File uploadDir = new File(uploadPath);
@@ -91,9 +90,5 @@ public class TypeController {
             typeService.save(type);
             return new ResponseEntity<>(type, HttpStatus.OK);
         }
-    }
-
-    public Department findDep(String name){
-        return departmentService.findByName(name);
     }
 }

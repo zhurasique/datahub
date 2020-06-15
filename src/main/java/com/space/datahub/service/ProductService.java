@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -21,6 +22,10 @@ public class ProductService {
 
     public Product findByName(String name){
         return productRepository.findByName(name);
+    }
+
+    public Optional<Product> findById(long id){
+        return productRepository.findById(id);
     }
 
     public List<Product> findByCategoryName(String name){

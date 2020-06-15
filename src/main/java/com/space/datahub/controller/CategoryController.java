@@ -1,7 +1,6 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Category;
-import com.space.datahub.domain.Type;
 import com.space.datahub.service.CategoryService;
 import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +61,10 @@ public class CategoryController {
         else {
             Category category = new Category();
             category.setName(name);
-            category.setType(findType(type));
+            category.setType(typeService.findByName(type));
 
             categoryService.save(category);
             return new ResponseEntity<>(category, HttpStatus.OK);
         }
-    }
-
-    public Type findType(String name){
-        return typeService.findByName(name);
     }
 }

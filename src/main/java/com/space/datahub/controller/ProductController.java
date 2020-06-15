@@ -3,25 +3,33 @@ package com.space.datahub.controller;
 import com.space.datahub.domain.Category;
 import com.space.datahub.domain.Product;
 import com.space.datahub.service.CategoryService;
+import com.space.datahub.service.ProductImageService;
 import com.space.datahub.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/product")
 public class ProductController {
+    @Value("${upload.path}")
+    private String uploadPath;
+
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final ProductImageService productImageService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService){
+    public ProductController(ProductService productService, CategoryService categoryService, ProductImageService productImageService){
         this.productService = productService;
         this.categoryService = categoryService;
+        this.productImageService = productImageService;
     }
 
     @GetMapping
@@ -67,7 +75,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String category){
+    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String category) throws IOException {
         Product product = new Product();
         product.setName(name);
         product.setPrice(price);
@@ -76,6 +84,7 @@ public class ProductController {
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
+
 
     public Category findCat(String name){
         return categoryService.findByName(name);

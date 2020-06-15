@@ -64,7 +64,6 @@ var department = new Vue({
 
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
-            console.log('>>>> 1st element in files array >>>> ', this.file);
         }
     },
 
@@ -151,7 +150,6 @@ var type = new Vue({
 
         handleFileUpload() {
             this.file = this.$refs.file.files[0];
-            console.log('>>>> 1st element in files array >>>> ', this.file);
         }
     },
 
@@ -223,6 +221,7 @@ var category = new Vue({
             ).then(response => {
                 this.categories.push(response.data);
                 this.loadCategories();
+                product.loadProducts();
             }).catch(error => {
                 console.log(error);
             });
@@ -275,17 +274,6 @@ var product = new Vue({
             catch( error => {
                 console.log(error);
             });
-
-            // axios({
-            //     method: "get",
-            //     url: productImagesApi + "/product?name="
-            // })
-            //     .then( response => {
-            //         this.products = response.data;
-            //     }).
-            // catch( error => {
-            //     console.log(error);
-            // });
         },
 
         delProduct: function(product) {
@@ -316,10 +304,22 @@ var product = new Vue({
                 console.log(error);
             });
 
+            setTimeout(function() {
+                product.saveProductImage();
+            }, 500);
+        },
+
+        saveProductImage: function(){
             let formDataFiles = new FormData();
+
             for( var i = 0; i < this.files.length; i++ ){
+                if(i > 0) {
+                    formDataFiles.delete("image");
+                    formDataFiles.delete("product");
+                }
+
                 formDataFiles.append("image", this.files[i]);
-                formDataFiles.append("product", this.product_name);
+                formDataFiles.append("product", this.products.slice(-1)[0].id);
                 axios.post( productImagesApi,
                     formDataFiles,
                     {
