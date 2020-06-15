@@ -98,6 +98,34 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="block" id="category">
+            <h2 class="center">Categories</h2>
+            <div id="categories">
+                <div>
+                    <select v-model="category_type" style="margin-left: 5px;">
+                        <option v-for="type in types" :key="type.id" v-bind:value="type">{{ type.name }}</option>
+                    </select>
+                    <input type="text" placeholder="Name" v-model="category_name" style="margin-left: 5px;"/>
+                    <input type="button" value="Save" @click="saveCategory" style="margin-left: 5px;"/>
+                </div>
+                <div v-for="category in categories" :key="category.id">
+                    <div style="position: relative; width: 580px">
+                        <div style="margin-top: 20px;">
+                            <strong>[{{ category.name }}]</strong>
+                            <span style="position: absolute; right: 0"><input type="button" value="X" @click="delCategory(category)"/></span>
+                            <ul>
+                                <li><strong>ID: </strong> {{ category.id }} </li>
+                                <li><strong>Name:</strong> {{ category.name }} </li>
+                                <li><strong>Department name:</strong> {{ category.type.department.name }} </li>
+                                <li><strong>Type name:</strong> {{ category.type.name }} </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

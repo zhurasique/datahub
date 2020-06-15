@@ -16,12 +16,10 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    private String image;
-
     @ManyToOne
     private Type type;
 
-    protected Category() {}
+    public Category() {}
 
     public long getId() {
         return id;
@@ -47,11 +45,4 @@ public class Category {
         this.type = type;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

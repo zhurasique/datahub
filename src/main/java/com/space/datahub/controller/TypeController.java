@@ -82,7 +82,7 @@ public class TypeController {
                 if(!uploadDir.exists()){
                     uploadDir.mkdir();
                 }
-                String resultFileName = UUID.randomUUID().toString() + "." + type.getName() + "." + image.getOriginalFilename();
+                String resultFileName = UUID.randomUUID().toString() + "." + type.getName().replace(" ", "-") + "." + image.getOriginalFilename();
                 image.transferTo(new File(uploadPath + "/" + resultFileName));
 
                 type.setImage(resultFileName);
@@ -91,10 +91,6 @@ public class TypeController {
             typeService.save(type);
             return new ResponseEntity<>(type, HttpStatus.OK);
         }
-
-
-
-
     }
 
     public Department findDep(String name){

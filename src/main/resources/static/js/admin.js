@@ -1,5 +1,6 @@
 let departmentApi = "/api/department";
 let typeApi = "/api/type";
+let categoryApi = "/api/category";
 
 var department = new Vue({
     el: "#department",
@@ -111,7 +112,7 @@ var type = new Vue({
             });
         },
 
-        delTypes: function(type) {
+        delType: function(type) {
             axios({
                 method: "delete",
                 url: typeApi + "/" + type.id
@@ -140,6 +141,7 @@ var type = new Vue({
             ).then(response => {
                 this.types.push(response.data);
                 this.loadTypes();
+                category.loadCategories();
             }).catch(error => {
                 console.log(error);
             });
@@ -153,5 +155,79 @@ var type = new Vue({
 
     created: function() {
         this.loadTypes(this.types);
+    }
+});
+
+var category = new Vue({
+    el: "#category",
+    data: function(){
+        return {
+            categories : [],
+            category_name: '',
+            category_type: '',
+            types: []
+        }
+    },
+
+    methods: {
+        loadTypes: function () {
+            axios({
+                method: "get",
+                url: typeApi
+            })
+                .then( response => {
+                    this.types = response.data;
+                    return response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        loadCategories: function () {
+            this.loadTypes();
+            axios({
+                method: "get",
+                url: categoryApi
+            })
+                .then( response => {
+                    this.categories = response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        delCategory: function(type) {
+            axios({
+                method: "delete",
+                url: categoryApi + "/" + type.id
+            })
+                .then( response => {
+                    this.categories.splice(this.categories.indexOf(type), 1)
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        saveCategory: function() {
+            let formData = new FormData();
+            formData.append("name", this.category_name);
+            formData.append("type", this.category_type.name);
+
+            axios.post( categoryApi,
+                formData,
+            ).then(response => {
+                this.categories.push(response.data);
+                this.loadCategories();
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+    },
+
+    created: function() {
+        this.loadCategories(this.categories);
     }
 });

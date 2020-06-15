@@ -1,23 +1,26 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Category;
+import com.space.datahub.domain.Type;
 import com.space.datahub.service.CategoryService;
+import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/category")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final TypeService typeService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, TypeService typeService) {
         this.categoryService = categoryService;
+        this.typeService = typeService;
     }
 
     @GetMapping
@@ -53,12 +56,20 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Category category){
-        if(byName(category.getName()) != null)
-            return new ResponseEntity<>(category, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<?> create(@RequestParam String name, @RequestParam String type){
+        if(byName(name) != null)
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         else {
+            Category category = new Category();
+            category.setName(name);
+            category.setType(findType(type));
+
             categoryService.save(category);
             return new ResponseEntity<>(category, HttpStatus.OK);
         }
+    }
+
+    public Type findType(String name){
+        return typeService.findByName(name);
     }
 }
