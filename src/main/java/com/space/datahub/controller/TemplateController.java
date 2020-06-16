@@ -1,22 +1,13 @@
 package com.space.datahub.controller;
 
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TemplateController implements ErrorController {
+public class TemplateController {
 
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
 
-    @RequestMapping("/error")
-    public String handleError() {
-        return "404";
-    }
 
     @RequestMapping("/")
     public ModelAndView index () {
