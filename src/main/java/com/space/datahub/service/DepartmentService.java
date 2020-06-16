@@ -24,6 +24,8 @@ public class DepartmentService {
         return departmentRepository.findByName(name);
     }
 
+    public void delete(Department department) { departmentRepository.delete(department);}
+
     public Department save(@RequestBody Department department){
         return departmentRepository.save(department);
     }

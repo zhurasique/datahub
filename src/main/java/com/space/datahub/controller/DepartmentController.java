@@ -1,6 +1,7 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Department;
+import com.space.datahub.domain.Product;
 import com.space.datahub.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,11 @@ public class DepartmentController {
         if(name != null && !name.isEmpty())
             return departmentService.findByName(name);
         return null;
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Department department){
+        departmentService.delete(department);
     }
 
     @PostMapping
