@@ -69,10 +69,11 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String category) throws IOException {
+    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String description, @RequestParam String category) throws IOException {
         Product product = new Product();
         product.setName(name);
         product.setPrice(price);
+        product.setDescription(description);
         product.setCategory(categoryService.findByName(category));
 
         productService.save(product);

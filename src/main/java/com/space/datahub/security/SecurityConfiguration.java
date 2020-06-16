@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.POST,"/api/**");
+        web.ignoring().mvcMatchers(HttpMethod.DELETE, "/api/**");
     }
 
     @Override

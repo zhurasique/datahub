@@ -136,6 +136,7 @@
                     </select>
                     <input type="text" placeholder="Name" v-model="product_name" style="margin-left: 5px;"/>
                     <input type="text" placeholder="Price" v-model="product_price" style="margin-left: 5px;"/>
+                    <input type="text" placeholder="Description" v-model="product_description" style="margin-left: 5px;"/>
                     <input type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()"/>
                     <input type="button" value="Save" @click="saveProduct" style="margin-left: 5px;"/>
                 </div>
@@ -148,6 +149,7 @@
                                 <li><strong>ID: </strong> {{ product.id }} </li>
                                 <li><strong>Name:</strong> {{ product.name }} </li>
                                 <li><strong>Price:</strong> {{ product.price }} </li>
+                                <li><strong>Description:</strong> {{ product.description }} </li>
                                 <li><strong>Department name:</strong> {{ product.category.type.department.name }} </li>
                                 <li><strong>Type name:</strong> {{ product.category.type.name }} </li>
                                 <li><strong>Category name:</strong> {{ product.category.name }} </li>

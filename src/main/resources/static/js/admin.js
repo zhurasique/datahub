@@ -198,13 +198,13 @@ var category = new Vue({
             });
         },
 
-        delCategory: function(type) {
+        delCategory: function(category) {
             axios({
                 method: "delete",
                 url: categoryApi + "/" + type.id
             })
                 .then( response => {
-                    this.categories.splice(this.categories.indexOf(type), 1)
+                    this.categories.splice(this.categories.indexOf(category), 1)
                 }).
             catch( error => {
                 console.log(error);
@@ -241,6 +241,7 @@ var product = new Vue({
             product_name: '',
             files: '',
             product_price: '',
+            product_description: '',
             product_category: '',
             categories: [],
             product_images: '',
@@ -277,13 +278,26 @@ var product = new Vue({
             });
         },
 
+        loadImages: function(){
+            axios({
+                method: "get",
+                url: productImagesApi
+            })
+                .then( response => {
+                    this.images = response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
         delProduct: function(product) {
             axios({
                 method: "delete",
                 url: productApi + "/" + product.id
             })
                 .then( response => {
-                    this.products.splice(this.products.indexOf(type), 1)
+                    this.products.splice(this.products.indexOf(product), 1)
                 }).
             catch( error => {
                 console.log(error);
@@ -294,6 +308,7 @@ var product = new Vue({
             let formData = new FormData();
             formData.append("name", this.product_name);
             formData.append("price", this.product_price)
+            formData.append("description", this.product_description);
             formData.append("category", this.product_category.name);
 
             axios.post( productApi,
@@ -342,6 +357,7 @@ var product = new Vue({
     },
 
     created: function() {
+        this.loadImages(this.images);
         this.loadProducts(this.products);
     }
 });

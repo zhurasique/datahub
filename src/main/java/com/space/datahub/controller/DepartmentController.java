@@ -56,7 +56,10 @@ public class DepartmentController {
                     uploadDir.mkdir();
                 }
 
-                String resultFileName = UUID.randomUUID().toString() + "." + department.getName().replace(" ", "-") + "." + image.getOriginalFilename();
+                String departmentName = department.getName().replace(" ", "-");
+                departmentName = departmentName.replace("/", "-");
+
+                String resultFileName = UUID.randomUUID().toString() + "." +  departmentName + "." + image.getOriginalFilename();
                 image.transferTo(new File(uploadPath + "/" + resultFileName));
 
                 department.setImage(resultFileName);

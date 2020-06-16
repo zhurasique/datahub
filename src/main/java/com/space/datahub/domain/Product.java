@@ -19,6 +19,8 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
+    private String description;
+
     @ManyToOne
     private Category category;
 
@@ -54,5 +56,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -64,7 +64,10 @@ public class ProductImageController {
                 uploadDir.mkdir();
             }
 
-            String resultFileName = UUID.randomUUID().toString() + "." + productImage.getProduct().getName() + "." + image.getOriginalFilename();
+            String productName = productImage.getProduct().getName().replace(" ", "-");
+            productName = productName.replace("/", "-");
+
+            String resultFileName = UUID.randomUUID().toString() + "." + productName + "." + image.getOriginalFilename();
             image.transferTo(new File(uploadPath + "/" + resultFileName));
 
             productImage.setImage(resultFileName);

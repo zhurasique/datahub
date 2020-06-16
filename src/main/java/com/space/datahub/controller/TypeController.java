@@ -81,7 +81,11 @@ public class TypeController {
                 if(!uploadDir.exists()){
                     uploadDir.mkdir();
                 }
-                String resultFileName = UUID.randomUUID().toString() + "." + type.getName().replace(" ", "-") + "." + image.getOriginalFilename();
+
+                String typeName = type.getName().replace(" ", "-");
+                typeName = typeName.replace("/", "-");
+
+                String resultFileName = UUID.randomUUID().toString() + "." + typeName + "." + image.getOriginalFilename();
                 image.transferTo(new File(uploadPath + "/" + resultFileName));
 
                 type.setImage(resultFileName);
