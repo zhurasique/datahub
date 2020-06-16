@@ -64,13 +64,13 @@ public class ProductImageController {
                 uploadDir.mkdir();
             }
 
-            String resultFileName = UUID.randomUUID().toString() + "." + "." + image.getOriginalFilename();
+            String resultFileName = UUID.randomUUID().toString() + "." + productImage.getProduct().getName() + "." + image.getOriginalFilename();
             image.transferTo(new File(uploadPath + "/" + resultFileName));
 
             productImage.setImage(resultFileName);
         }
 
         productImageService.save(productImage);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(productImage, HttpStatus.OK);
     }
 }

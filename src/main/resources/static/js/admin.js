@@ -243,7 +243,8 @@ var product = new Vue({
             product_price: '',
             product_category: '',
             categories: [],
-            product_images: ''
+            product_images: '',
+            images: []
         }
     },
 
@@ -299,7 +300,6 @@ var product = new Vue({
                 formData,
             ).then(response => {
                 this.products.push(response.data);
-                this.loadProducts();
             }).catch(error => {
                 console.log(error);
             });
@@ -327,12 +327,12 @@ var product = new Vue({
                             'Content-Type': 'multipart/form-data'
                         }
                     }
-                ).then(function(){
-                    console.log('SUCCESS!!');
-                })
-                    .catch(function(){
-                        console.log('FAILURE!!');
-                    });
+                ).then(response => {
+                    this.images.push(response.data);
+                    this.loadProducts();
+                }).catch(error => {
+                    console.log(error);
+                });
             }
         },
 

@@ -151,6 +151,12 @@
                                 <li><strong>Department name:</strong> {{ product.category.type.department.name }} </li>
                                 <li><strong>Type name:</strong> {{ product.category.type.name }} </li>
                                 <li><strong>Category name:</strong> {{ product.category.name }} </li>
+                                <li><strong>Images:</strong></li>
+                                <ul>
+                                    <li v-for="image in images" :key="image.id" href="#" v-if="product.name == image.product.name">
+                                        {{ image.image }}
+                                    </li>
+                                </ul>
                             </ul>
                         </div>
                     </div>
