@@ -34,8 +34,26 @@ public class ProductImageController {
     }
 
     @GetMapping
-    public List<ProductImage> byBag(){
+    public List<ProductImage> list(){
         return productImageService.findAll();
+    }
+
+    @GetMapping("/unique")
+    public List<ProductImage> unique(){
+        List<ProductImage> tmp = productImageService.findAll();
+        List<ProductImage> productImages = new ArrayList<>();
+
+        long id = -1;
+        String name = "";
+
+        for (int i = 0; i < tmp.size(); i++) {
+            if (id != tmp.get(i).getProduct().getId() && !name.equals(tmp.get(i).getProduct().getName())) {
+                id = tmp.get(i).getProduct().getId();
+                name = tmp.get(i).getProduct().getName();
+                productImages.add(tmp.get(i));
+            }
+        }
+        return productImages;
     }
 
     @GetMapping("/product")
@@ -45,6 +63,7 @@ public class ProductImageController {
         }
         return null;
     }
+
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") ProductImage productImage){
