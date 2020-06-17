@@ -155,7 +155,7 @@
                                 <li><strong>Category name:</strong> {{ product.category.name }} </li>
                                 <li><strong>Images:</strong></li>
                                 <ul>
-                                    <li v-for="image in images" :key="image.id" href="#" v-if="product.name == image.product.name">
+                                    <li v-for="image in images" :key="image.id" href="#" v-if="product.id == image.product.id">
                                         {{ image.image }}
                                     </li>
                                 </ul>

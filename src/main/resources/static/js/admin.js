@@ -266,6 +266,7 @@ var product = new Vue({
 
         loadProducts: function () {
             this.loadCategories();
+            this.loadImages();
             axios({
                 method: "get",
                 url: productApi
@@ -321,34 +322,29 @@ var product = new Vue({
 
             setTimeout(function() {
                 product.saveProductImage();
-            }, 500);
+            }, 2000);
         },
 
         saveProductImage: function(){
             let formDataFiles = new FormData();
-
-            for( var i = 0; i < this.files.length; i++ ){
-                if(i > 0) {
-                    formDataFiles.delete("image");
-                    formDataFiles.delete("product");
-                }
-
+            for (var i = 0; i < this.files.length; i++) {
                 formDataFiles.append("image", this.files[i]);
-                formDataFiles.append("product", this.products.slice(-1)[0].id);
-                axios.post( productImagesApi,
-                    formDataFiles,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                ).then(response => {
-                    this.images.push(response.data);
-                    this.loadProducts();
-                }).catch(error => {
-                    console.log(error);
-                });
             }
+            formDataFiles.append("product", this.products.slice(-1)[0].id);
+
+
+            axios.post( productImagesApi,
+                formDataFiles,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(response => {
+                this.loadProducts();
+            }).catch(error => {
+                console.log(error);
+            });
         },
 
         handleFilesUpload(){

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,30 +51,38 @@ public class ProductImageController {
         productImageService.delete(productImage);
     }
 
-    @PostMapping()
-    public ResponseEntity<?> addImg(@RequestParam long product, @RequestParam MultipartFile image) throws IOException {
+    @PostMapping
+        public ResponseEntity<?> addImg(@RequestParam long product, @RequestParam("image") List<MultipartFile> image) throws IOException {
+        List<ProductImage> list = new ArrayList<>();
 
-        ProductImage productImage = new ProductImage();
-        Optional<Product> optional = productService.findById(product);
-        optional.ifPresent(productImage::setProduct);
+        for(int i = 0; i < image.size(); i++) {
+            ProductImage productImage = new ProductImage();
+            Optional<Product> optional = productService.findById(product);
+            optional.ifPresent(productImage::setProduct);
 
-        if(image != null){
             File uploadDir = new File(uploadPath);
 
-            if(!uploadDir.exists()){
+            if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
 
             String productName = productImage.getProduct().getName().replace(" ", "-");
             productName = productName.replace("/", "-");
 
-            String resultFileName = UUID.randomUUID().toString() + "." + productName + "." + image.getOriginalFilename();
-            image.transferTo(new File(uploadPath + "/" + resultFileName));
+            String resultFileName = UUID.randomUUID().toString() + "." + productName + "." + image.get(i).getOriginalFilename();
+            image.get(i).transferTo(new File(uploadPath + "/" + resultFileName));
 
             productImage.setImage(resultFileName);
+
+            productImageService.save(productImage);
+            list = productImageService.findByProductName(productImage.getProduct().getName());
         }
 
-        productImageService.save(productImage);
-        return new ResponseEntity<>(productImage, HttpStatus.OK);
+        for(int i = 0; i < list.size(); i++){
+            if (list.get(i).getProduct().getId() != product)
+                list.remove(i);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

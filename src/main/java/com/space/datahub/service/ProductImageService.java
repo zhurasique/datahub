@@ -23,6 +23,10 @@ public class ProductImageService {
         return productImageRepository.findByProductName(name);
     }
 
+    public ProductImage findByProductId(long id) {
+        return productImageRepository.findByProductId(id);
+    }
+
     public void delete(ProductImage productImage){
         productImageRepository.delete(productImage);
     }
