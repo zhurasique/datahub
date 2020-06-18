@@ -1,4 +1,4 @@
-let departmentApi = "/api/user/";
+let registrationApi = "/api/user/";
 
 var registration = new Vue({
     el: "#registration",
@@ -6,7 +6,9 @@ var registration = new Vue({
         return {
             username: '',
             email: '',
-            password: ''
+            password: '',
+            name: '',
+            surname: ''
         }
     },
 
@@ -14,15 +16,17 @@ var registration = new Vue({
         registerUser: function () {
             axios({
                 method: "post",
-                url: departmentApi,
+                url: registrationApi,
                 data: {
                     username: this.username,
                     email:  this.email,
-                    password: this.password
+                    password: this.password,
+                    surname: this.surname,
+                    name: this.name
                 }
-            }).then(response => {
-                console.log(response.data);
-            }).catch(error => {
+            }).then(
+                document.location.href="/login"
+            ).catch(error => {
                 console.log(error);
             });
         }

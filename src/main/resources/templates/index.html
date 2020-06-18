@@ -15,7 +15,7 @@
 <body>
 
 <header>
-    <div class="flex-space-between header-wrapper">
+    <div class="flex-space-between header-wrapper" id="header">
         <div class="logo-bar">
             <a href="/">
                 <img src="img/main-head.png">
@@ -29,13 +29,27 @@
                 </div>
             </form>
         </div>
-        <div class="bag-bar">
+        <div class="bag-bar" id="bag">
             <img src="img/bag.png" id="bag-logo">
+            <p>Twój koszyk</p>
+            <div class="dropdown-bag">
+                <div v-if="typeof user.username === 'undefined'">
+                    <a href="/login">Zaloguj się!</a>
+                </div>
+                <div v-else>
+                    <div v-if="typeof bag.name === 'undefined'">
+                        not got
+                    </div>
+                    <div v-else>
+                        got
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="login-bar" id="user">
             <img src="img/login.png" id="login-logo">
             <div v-if="typeof user.username !== 'undefined'">
-                <p>Cześć, {{ user.username }}!</p>
+                <p>{{ user.name }} {{ user.surname }}</p>
                 <div class="dropdown-content">
                     <a href="#" class="flex menu-div">
                         <img src="img/product.svg">
@@ -86,6 +100,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="js/index.js"></script>
-<script src="js/loginCheck.js"></script>
+<script src="js/header.js"></script>
 </body>
 </html>

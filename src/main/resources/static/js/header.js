@@ -1,10 +1,11 @@
 let userApi = "/api/user/";
 
-var user = new Vue({
-    el: "#user",
+var header = new Vue({
+    el: "#header",
     data: function(){
         return {
-            user : ''
+            user : '',
+            bag : ''
         }
     },
 
@@ -16,6 +17,19 @@ var user = new Vue({
             })
                 .then(response => {
                     this.user = response.data;
+                }).catch(error => {
+                console.log(error);
+            });
+        },
+
+        loadBag: function () {
+            axios({
+                method: "get",
+                url: bagApi + "name?name=" + this.user.username
+            })
+                .then(response => {
+                    this.bag = response.data;
+                    console.log("33");
                 }).catch(error => {
                 console.log(error);
             });

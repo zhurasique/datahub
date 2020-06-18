@@ -24,13 +24,22 @@
             <form method="post">
                 <h1>Rejestracja</h1>
                 <div class="block">
-                    <div class="flex justify-content-center">
+                    <div class="flex justify-content-center" style="align-items: flex-start;">
                         <img src="img/user.svg">
                         <div class="block">
-                            <p>Username</p>
-                            <input type="text" id="username" name="username" v-model="username"/>
+                            <div class="block">
+                                <p>Username</p>
+                                <input type="text" id="username" name="username" v-model="username"/>
+                            </div>
+                            <div class="block">
+                                <p>Imię</p>
+                                <input type="text" id="name" name="name" v-model="name"/>
+                            </div>
+                            <div class="block">
+                                <p>Nawisko</p>
+                                <input type="text" id="surname" name="surname" v-model="surname"/>
+                            </div>
                         </div>
-
                     </div>
                     <div class="flex justify-content-center">
                         <img src="img/mail.svg">
