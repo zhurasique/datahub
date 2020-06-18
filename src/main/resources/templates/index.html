@@ -8,6 +8,7 @@
     <title>sklepik.pl - atrakcyjne ceny</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon'/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 </head>
@@ -16,8 +17,9 @@
 <header>
     <div class="flex-space-between header-wrapper">
         <div class="logo-bar">
-            <h1>SKLEPIK</h1>
-            
+            <a href="/">
+                <img src="img/main-head.png">
+            </a>
         </div>
         <div class="search-bar">
             <form>
@@ -32,7 +34,19 @@
         </div>
         <div class="login-bar" id="user">
             <img src="img/login.png" id="login-logo">
-            <p v-if="typeof user.username !== 'undefined'">Cześć, {{ user.username }}!</p>
+            <div v-if="typeof user.username !== 'undefined'">
+                <p>Cześć, {{ user.username }}!</p>
+                <div class="dropdown-content">
+                    <a href="#" class="flex menu-div">
+                        <img src="img/product.svg">
+                        <p>Moje zamówienia</p>
+                    </a>
+                    <a href="/logout" class="flex menu-div">
+                        <img src="img/logout.svg">
+                        <p>Wyloguj</p>
+                    </a>
+                </div>
+            </div>
             <div v-else>
                 <a href="/login">Logowanie </a>
                 /<a href="/registration"> Rejestracja</a>

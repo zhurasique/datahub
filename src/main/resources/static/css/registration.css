@@ -15,6 +15,7 @@
 }
 
 form img{
+    padding-top: 20px;
     max-width: 60px;
     margin-right: 20px;
     filter: invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%);
@@ -29,7 +30,7 @@ form img{
     align-items: flex-end;
 }
 
-form input{
+.block input{
     font-size: 17px;
     max-height: 50px;
     height: 30px;
@@ -49,7 +50,6 @@ form input{
     border-radius: 5px;
     margin-top: 35px;
     cursor: pointer;
-    text-transform: uppercase;
 }
 
 .btn:hover{
@@ -69,4 +69,21 @@ form h1{
 .wrapper{
     max-height: 950px;
     height: 950px;
+}
+
+.sub{
+    background-color: #ff598a;
+    border: none;
+    color: white;
+    letter-spacing: 2px;
+    padding: 12px 60px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 35px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.sub:hover{
+    background-color: #ff2198;
 }

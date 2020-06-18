@@ -10,50 +10,38 @@
     <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
-<header>
-    <div class="flex-space-between header-wrapper">
-        <div class="logo-bar">
-            <img src="img/logo_full.png" id="main-logo">
-        </div>
-        <div class="search-bar">
-            <form>
-                <div class="flex">
-                    <input type="search" placeholder="czego szukasz?" id="search-input">
-                    <button id="search-button">SZUKAJ</button>
-                </div>
-            </form>
-        </div>
-        <div class="bag-bar">
-            <img src="img/bag.png" id="bag-logo">
-        </div>
-        <div class="login-bar">
-            <img src="img/login.png" id="login-logo">
-        </div>
-    </div>
-</header>
 <div class="main">
+    <div class="logo-bar">
+        <a href="/">
+            <img src="img/main.png">
+        </a>
+    </div>
     <div class="wrapper">
         <div class="sec-wrap">
-            <div class="login">
+            <div tiles:fragment="content" class="login">
                 <form name="f" th:action="@{/login}" method="post">
                     <h1>Logowanie</h1>
-                    <div class="flex justify-content-center">
-                        <img src="img/user.svg">
-                        <div class="block">
-                            <p>Nazwa użytkownika:</p>
-                            <input type="text" id="username" name="username" placeholder="wpisz nazwę"/>
+                    <div class="block">
+                        <div class="flex justify-content-center">
+                            <img src="img/user.svg">
+                            <div class="block">
+                                <p>Username</p>
+                                <input type="text" id="username" name="username"/>
+                            </div>
                         </div>
-
+                        <div class="flex justify-content-center pt-30">
+                            <img src="img/password.svg">
+                            <div class="block">
+                                <p>Password</p>
+                                <input type="password" id="password" name="password"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex justify-content-center">
-                        <img src="img/password.svg">
-                        <div class="block">
-                            <p>Hasło:</p>
-                            <input type="password" id="password" name="password" placeholder="wpizs hasło"/>
-                        </div>
+                    <div class="ask">
+                        <p>Nie masz konta? <a href="/registration">Zarejestruj się!</a></p>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn">Zaloguj się !</button>
+                        <button type="submit" class="btn">Zaloguj</button>
                     </div>
                 </form>
             </div>
