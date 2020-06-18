@@ -18,7 +18,7 @@ public class ProductInBag {
     @ManyToOne
     Product product;
 
-    protected ProductInBag () {}
+    public ProductInBag () {}
 
     public long getId() {
         return id;

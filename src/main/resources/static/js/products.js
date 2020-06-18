@@ -1,6 +1,7 @@
-let typeApi = "http://localhost:8080/api/type/";
-let categoryApi = "http://localhost:8080/api/category/";
-let productApi = "http://localhost:8080/api/product/";
+let typeApi = "/api/type/";
+let categoryApi = "/api/category/";
+let productApi = "/api/product/";
+let productImagesApi = "/api/productimage/";
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -12,6 +13,9 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
+function isInteger(num) {
+    return (num ^ 0) === num;
+}
 
 var byType = getParameterByName('type');
 var byCategory = getParameterByName('category');
@@ -24,7 +28,7 @@ if(byType != null){
     endPoint = "type/name?type=";
 }
 
-if(byCategory != null){
+if(byCategory != null) {
     qParam = byCategory.toString();
     endPoint = "category/name?category=";
 }
@@ -34,7 +38,8 @@ var products = new Vue({
     data: function(){
         return {
             products: [],
-            images: []
+            images: [],
+            links: []
         }
     },
 
@@ -48,15 +53,37 @@ var products = new Vue({
                 .then(response => {
                     this.products = response.data;
                     for(let i = 0; i < this.products.length; i++) {
-                        this.images.push("./static/img/" + this.products[i].name.toLocaleLowerCase().trim().replace(/ /g,"-") + ".jpg");
-                        //this.links.push("/dzial/" + this.types[i].name.toLocaleLowerCase().trim().replace(/ /g,"-"))
+                        if(isInteger(this.products[i]["price"])){
+                            this.products[i]["price"] = this.products[i]["price"].toString() + ",00 zł";
+                        }else{
+                            this.products[i]["price"] = this.products[i]["price"].toString().trim().replace(/\./g,",") + " zł";
+                        }
+                        this.links.push("/product?product=" + this.products[i].id);
                     }
                 }).catch(error => {
                 console.log(error);
             });
-        }
+        },
+
+        loadImages: function(){
+            axios({
+                method: "get",
+                url: productImagesApi + "unique"
+            })
+                .then( response => {
+                    this.images = response.data;
+
+                    for(let i = 0; i < this.images.length; i++)
+                        this.images[i]["image"] = "http://localhost/dashboard/images/datahub/" + this.images[i]["image"];
+
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
     },
     created: function () {
         this.loadProducts(this.products);
+        this.loadImages(this.images);
     }
 });

@@ -19,6 +19,10 @@ public class ProductInBagService {
         return productInBagRepository.findByBagName(name);
     }
 
+    public List<ProductInBag> findAll(){
+        return productInBagRepository.findAll();
+    }
+
     public void delete(ProductInBag productInBag){
         productInBagRepository.delete(productInBag);
     }

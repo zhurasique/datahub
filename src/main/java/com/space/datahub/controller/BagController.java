@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/bag")
@@ -22,6 +22,11 @@ public class BagController {
     public BagController(BagService bagService, UserService userService) {
         this.bagService = bagService;
         this.userService = userService;
+    }
+
+    @GetMapping
+    public List<Bag> list(){
+        return bagService.findAll();
     }
 
     @GetMapping("/user")
@@ -39,10 +44,8 @@ public class BagController {
     
     @GetMapping("/name")
     public Bag byUsername(@RequestParam String name){
-        Bag bag = null;
         if(name != null && !name.isEmpty()) {
-            bag = bagService.findByName(name);
-            return bag;
+            return bagService.findByName(name);
         }
         return null;
     }
@@ -53,22 +56,15 @@ public class BagController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Bag bag){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        if(byUsername(username) == null) {
-            bag.setName(username + "_bag");
+    public ResponseEntity<?> create(@RequestParam String username){
+        if(byUsername(username + "_bag") == null) {
+            Bag bag = new Bag();
+            bag.setName(userService.findByUsername(username).getUsername() + "_bag");
             bag.setUser(userService.findByUsername(username));
             bagService.save(bag);
             return new ResponseEntity<>(bag, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(bag, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(byUsername(username + "_bag"), HttpStatus.ALREADY_REPORTED);
         }
     }
 }

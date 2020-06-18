@@ -10,7 +10,6 @@ var user = new Vue({
 
     methods: {
         loadUser: function () {
-            this.user = '';
             axios({
                 method: "get",
                 url: userApi + "logged"

@@ -6,9 +6,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TemplateController {
-
-
-
     @RequestMapping("/")
     public ModelAndView index () {
         ModelAndView modelAndView = new ModelAndView();
@@ -59,9 +56,16 @@ public class TemplateController {
     }
 
     @RequestMapping("/products")
-    public ModelAndView type () {
+    public ModelAndView products () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("products");
+        return modelAndView;
+    }
+
+    @RequestMapping("/product")
+    public ModelAndView product () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("product");
         return modelAndView;
     }
 

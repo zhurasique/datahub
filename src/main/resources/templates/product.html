@@ -44,24 +44,14 @@
 
 <div class="main">
     <div class="wrapper" id="products">
-        <div class="products-section">
-            <div class="flex showed-product" v-for="(product, indexi) in products" :key="product.id">
-                <div class="img-block">
-                    <a v-bind:href="links[indexi]">
-                        <img v-for="(image, index) in images" :key="image.id" v-if="product.id == images[index].product.id" v-bind:src="images[index].image" class="prod-img"/>
-                    </a>
-                </div>
-                <a v-bind:href="links[indexi]" class="block">
-                    <p>{{ product.name }}</p>
-                    <h1 class="price">{{ product.price }}</h1>
-                </a>
-            </div>
+        <div id="product">
+            {{ product.name }}
+            <span style="position: absolute; right: 0"><input type="button" value="X" @click="orderProduct"/></span>
         </div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<script src="js/products.js"></script>
-<script src="js/loginCheck.js"></script>
+<script src="js/product.js"></script>
 </body>
 </html>

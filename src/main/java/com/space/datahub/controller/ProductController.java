@@ -31,6 +31,12 @@ public class ProductController {
         return productService.findAll();
     }
 
+    @GetMapping("/id")
+    public Product byProductId(@RequestParam String id){
+        long parsedId = Long.parseLong(id);
+        return productService.findById(parsedId);
+    }
+
     @GetMapping("/name")
     public Product byName(@RequestParam String name){
         if(name != null && !name.isEmpty()) {

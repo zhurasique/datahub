@@ -5,6 +5,7 @@ import com.space.datahub.repo.ProductRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +25,13 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
-    public Optional<Product> findById(long id){
-        return productRepository.findById(id);
+    public Product findById(long id){
+        Optional<Product> optional = productRepository.findById(id);
+        List<Product> product = new ArrayList<>();
+        optional.ifPresent(opt -> {
+            product.add(opt);
+        });
+        return product.get(0);
     }
 
     public List<Product> findByCategoryName(String name){

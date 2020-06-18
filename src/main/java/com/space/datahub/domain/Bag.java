@@ -18,7 +18,7 @@ public class Bag {
     @OneToOne
     private User user;
 
-    protected Bag() {}
+    public Bag() {}
 
     public long getId() {
         return id;

@@ -1,6 +1,5 @@
 package com.space.datahub.controller;
 
-import com.space.datahub.domain.Product;
 import com.space.datahub.domain.ProductImage;
 import com.space.datahub.service.ProductImageService;
 import com.space.datahub.service.ProductService;
@@ -14,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -76,8 +74,7 @@ public class ProductImageController {
 
         for(int i = 0; i < image.size(); i++) {
             ProductImage productImage = new ProductImage();
-            Optional<Product> optional = productService.findById(product);
-            optional.ifPresent(productImage::setProduct);
+            productImage.setProduct(productService.findById(product));
 
             File uploadDir = new File(uploadPath);
 
