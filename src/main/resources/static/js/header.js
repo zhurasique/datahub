@@ -1,15 +1,24 @@
 let userApi = "/api/user/";
+let productInBagApi = "/api/productinbag/"
 
 var header = new Vue({
     el: "#header",
     data: function(){
         return {
             user : '',
-            bag : ''
+            bag : []
         }
     },
 
     methods: {
+        loadHeader: function () {
+            this.loadUser();
+
+            setTimeout(function () {
+                    header.loadProductsToBag();
+                }, 500);
+        },
+
         loadUser: function () {
             axios({
                 method: "get",
@@ -22,20 +31,31 @@ var header = new Vue({
             });
         },
 
-        loadBag: function () {
+        loadProductsToBag: function () {
             axios({
                 method: "get",
-                url: bagApi + "name?name=" + this.user.username
+                url: productInBagApi + "bag?bag=" + this.user.username + "_bag"
             })
                 .then(response => {
+                    console.log(productInBagApi + "bag?bag=" + this.user.username + "_bag");
                     this.bag = response.data;
-                    console.log("33");
                 }).catch(error => {
                 console.log(error);
             });
-        }
+        },
     },
     created: function () {
-        this.loadUser(this.user);
+        this.loadHeader();
     }
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(function() {
+        let dropBag = document.getElementById("dropdown-bag");
+        if(typeof header.user.username === 'undefined'){
+            dropBag.style.left = "64%";
+        }else{
+            dropBag.style.left = "66.5%";
+        }
+    }, 100);
 });

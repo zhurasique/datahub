@@ -32,16 +32,18 @@
         <div class="bag-bar" id="bag">
             <img src="img/bag.png" id="bag-logo">
             <p>Twój koszyk</p>
-            <div class="dropdown-bag">
+            <div class="dropdown-bag" id="dropdown-bag">
                 <div v-if="typeof user.username === 'undefined'">
                     <a href="/login">Zaloguj się!</a>
                 </div>
                 <div v-else>
-                    <div v-if="typeof bag.name === 'undefined'">
-                        not got
+                    <div v-if="typeof bag === 'undefined'">
+                        <p>not got</p>
                     </div>
                     <div v-else>
-                        got
+                        <p v-for="product in bag" key="product.id">
+                            {{ product.product.name }}
+                        </p>
                     </div>
                 </div>
             </div>
