@@ -128,7 +128,7 @@
         </div>
 
         <div class="block" id="product">
-            <h2 class="center">Products</h2>
+            <h2 class="center"></h2>
             <div id="products">
                 <div>
                     <select v-model="product_category" style="margin-left: 5px;">
@@ -155,11 +155,47 @@
                                 <li><strong>Category name:</strong> {{ product.category.name }} </li>
                                 <li><strong>Images:</strong></li>
                                 <ul>
-                                    <li v-for="image in images" :key="image.id" href="#" v-if="product.id == image.product.id">
-                                        {{ image.image }}
+                                    <li v-for="image in images" :key="image.id"  v-if="product.id == image.product.id">
+                                        <a href="#">{{ image.image }}</a>
                                     </li>
                                 </ul>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="center">Orders</h2>
+        <div class="flex" id="orders">
+            <div class="block">
+                <h2 class="center">Received</h2>
+                <div>
+                    <div v-for="order in orders" :key="order.id">
+                        <div style="position: relative; width: 580px">
+                            <div style="margin-top: 20px;">
+                                <strong>[{{ order.number }}]</strong>
+                                <span style="position: absolute; right: 0"><input type="button" value="X" @click="delProduct(product)"/></span>
+                                <ul>
+                                    <li><strong>Number:</strong> {{ order.number }} </li>
+                                    <li><strong>Customer:</strong></li>
+                                    <ul>
+                                        <li><strong>Name:</strong> {{ order.user.name }} </li>
+                                        <li><strong>Surname:</strong> {{ order.user.surname }} </li>
+                                        <li><strong>Email:</strong> {{ order.user.email }} </li>
+                                        <li><strong>City:</strong> {{ order.city }} </li>
+                                        <li><strong>Address:</strong> {{ order.address }} </li>
+                                        <li><strong>Postal code:</strong> {{ order.pcode }} </li>
+                                    </ul>
+                                    <li><strong>Order:</strong></li>
+                                    <ul>
+                                        <li v-for="productinorder in productInOrders" :key="productinorder.id" href="#" v-if="order.number == productinorder.order.number">
+                                            <strong>Product name: </strong><a href="">{{ productinorder.product.name }}</a><br>
+                                            <strong>Product id: </strong>{{ productinorder.product.id }}
+                                        </li>
+                                    </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

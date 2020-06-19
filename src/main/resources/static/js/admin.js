@@ -3,6 +3,8 @@ let typeApi = "/api/type";
 let categoryApi = "/api/category";
 let productApi = "/api/product";
 let productImagesApi = "/api/productimage";
+let productInOrderApi = "/api/productinorder";
+let orderApi = "/api/order"
 
 var department = new Vue({
     el: "#department",
@@ -355,5 +357,64 @@ var product = new Vue({
     created: function() {
         this.loadImages(this.images);
         this.loadProducts(this.products);
+    }
+});
+
+var orders = new Vue({
+    el: "#orders",
+    data: function(){
+        return {
+            orders: [],
+            productInOrders: []
+        }
+    },
+
+    methods: {
+        loadOrder: function () {
+            axios({
+                method: "get",
+                url: orderApi
+            })
+                .then( response => {
+                    this.orders = response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+
+            setTimeout(function() {
+                orders.loadProductsInOrder();
+            }, 500);
+        },
+
+        delOrder: function(order) {
+            axios({
+                method: "delete",
+                url: orderApi + "/" + order.id
+            })
+                .then( response => {
+                    this.orders.splice(this.orders.indexOf(order), 1)
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        loadProductsInOrder: function(){
+            axios({
+                method: "get",
+                url: productInOrderApi
+            })
+                .then( response => {
+                    this.productInOrders = response.data;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+    },
+
+    created: function() {
+        this.loadOrder(this.orders);
     }
 });
