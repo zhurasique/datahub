@@ -412,6 +412,28 @@ var orders = new Vue({
                 console.log(error);
             });
         },
+
+        changeOrderStatus: function (order) {
+            axios({
+                method: "put",
+                url: orderApi + "/" + order.id,
+                data: {
+                    phone: order.phone,
+                    city: order.city,
+                    address: order.address,
+                    pcode: order.pcode,
+                    status: order.status + 1,
+                    number: order.number,
+                    user: order.user
+                }
+            })
+                .then(response => {
+                    console.log(response);
+                    this.loadOrder();
+                }).catch(error => {
+                console.log(error);
+            });
+        }
     },
 
     created: function() {

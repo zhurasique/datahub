@@ -3,6 +3,7 @@ package com.space.datahub.controller;
 import com.space.datahub.domain.Order;
 import com.space.datahub.service.OrderService;
 import com.space.datahub.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,12 @@ public class OrderController {
         return orderService.findById(parsedId);
     }
 
+    @PutMapping("{id}")
+    public Order update(@PathVariable("id") Order orderFromDb, @RequestBody Order order){
+        BeanUtils.copyProperties(order, orderFromDb, "id");
+        return orderService.save(orderFromDb);
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestParam String username,
                                     @RequestParam String phone,
@@ -48,7 +55,7 @@ public class OrderController {
         order.setPcode(pcode);
 
         order.setStatus(0);
-        order.setNumber(UUID.randomUUID().toString() + order.getId());
+        order.setNumber(UUID.randomUUID().toString() + order.getPcode());
 
         orderService.save(order);
         return new ResponseEntity<>(order, HttpStatus.OK);
