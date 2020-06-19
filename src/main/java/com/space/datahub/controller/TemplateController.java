@@ -69,6 +69,13 @@ public class TemplateController {
         return modelAndView;
     }
 
+    @RequestMapping("/order")
+    public ModelAndView order () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("order");
+        return modelAndView;
+    }
+
     @RequestMapping("/admin")
     public ModelAndView admin () {
         ModelAndView modelAndView = new ModelAndView();
