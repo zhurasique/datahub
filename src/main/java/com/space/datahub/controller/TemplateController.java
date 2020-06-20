@@ -83,6 +83,13 @@ public class TemplateController {
         return modelAndView;
     }
 
+    @RequestMapping("/myorders")
+    public ModelAndView myorders () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("myorders");
+        return modelAndView;
+    }
+
     @RequestMapping("/admin")
     public ModelAndView admin () {
         ModelAndView modelAndView = new ModelAndView();

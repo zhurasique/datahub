@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>sklepik.pl - atrakcyjne ceny</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon'/>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/order.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
@@ -73,36 +73,12 @@
 </header>
 <div class="main">
     <div class="wrapper">
-        <div class="flex hello-block">
-            <div class="department-bar">
-                <div class="under-border">
-                    <p id="font-spacing">Działy</p>
-                </div>
-                <div class="block" id="departments">
-                    <a class="department-block flex align-items-center" name="department" v-for="(department, index) in departments" key="department.id" v-bind:href="links[index]">
-                        <img v-bind:src="images[index]">
-                        {{ department.name }}
-                    </a>
-                </div>
-            </div>
-            <div class="type-bar" id="types">
-                <div class="block" id="showed-type-category" v-for="type in types" :key="type.id">
-                    <div id="type">
-                        <a href="#" id="showed-type">{{ type.name }}</a>
-                    </div>
-                    <div id="categories">
-                        <a class="block" v-for="category in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name">
-                            {{ category.name }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h1>Moje zamówienia</h1>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<script src="js/index.js"></script>
+<script src="js/myorders.js"></script>
 <script src="js/header.js"></script>
 </body>
 </html>
