@@ -35,6 +35,11 @@ public class OrderController {
         return orderService.findById(parsedId);
     }
 
+    @GetMapping("/user")
+    public List<Order> user(@RequestParam String user){
+        return orderService.findByUserUsername(user);
+    }
+
     @PutMapping("{id}")
     public Order update(@PathVariable("id") Order orderFromDb, @RequestBody Order order){
         BeanUtils.copyProperties(order, orderFromDb, "id");

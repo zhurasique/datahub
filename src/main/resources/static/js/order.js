@@ -2,6 +2,7 @@ let userApi = "/api/user/";
 let productInOrderApi = "/api/productinorder/";
 let productInBagApi = "/api/productinbag/";
 let orderApi = "/api/order/";
+let productImagesApi = "/api/productimage/";
 
 function isInteger(num) {
     return (num ^ 0) === num;
@@ -38,11 +39,16 @@ var order = new Vue({
     data: function(){
         return {
             productInBag: [],
+            showedProducts: [],
+            totalPrice: 0,
+            links: [],
             order: [],
             phone: '',
             pcode: '',
             address: '',
-            city: ''
+            city: '',
+            images: []
+
         }
     },
 
@@ -53,7 +59,23 @@ var order = new Vue({
                 url: productInBagApi + "bag?bag=" + user.user.username + "_bag"
             })
                 .then(response => {
+                    this.totalPrice = 0;
                     this.productInBag = response.data;
+                    this.showedProducts = response.data;
+                    for(let i = 0; i < this.showedProducts.length; i++) {
+                        this.totalPrice = this.totalPrice + parseFloat(this.showedProducts[i]["product"]["price"]);
+                        if (isInteger(this.showedProducts[i]["product"]["price"])) {
+                            this.showedProducts[i]["product"]["price"] = this.showedProducts[i]["product"]["price"].toString() + ",00 zł";
+                        } else {
+                            this.showedProducts[i]["product"]["price"] = this.showedProducts[i]["product"]["price"].toString().trim().replace(/\./g, ",") + " zł";
+                        }
+                        this.links.push("/product?product=" + this.showedProducts[i].product.id);
+                    }
+                    if (isInteger(this.totalPrice)) {
+                        this.totalPrice = this.totalPrice.toString() + ",00 zł";
+                    } else {
+                        this.totalPrice = this.totalPrice.toString().trim().replace(/\./g, ",") + " zł";
+                    }
                 }).catch(error => {
                 console.log(error);
             });
@@ -65,7 +87,10 @@ var order = new Vue({
 
             setTimeout(function() {
                 order.pushProductsToOrder();
-            }, 2000);
+                    setTimeout(function() {
+                        document.location.href="/thank"
+                    }, 200);
+            }, 200);
         },
 
         createOrder: function(){
@@ -89,9 +114,7 @@ var order = new Vue({
 
         pushProductsToOrder: function () {
             let formData = new FormData();
-            console.log(this.productInBag);
             formData.append("bag", this.productInBag[0].bag.name);
-            console.log(this.productInBag.length);
             formData.append("length", this.productInBag.length);
             formData.append("number", this.order[0].number);
 
@@ -102,6 +125,44 @@ var order = new Vue({
             }).catch(error => {
                 console.log(error);
             });
-        }
+        },
+
+        loadImages: function(){
+            axios({
+                method: "get",
+                url: productImagesApi + "unique"
+            })
+                .then( response => {
+                    this.images = response.data;
+
+                    for(let i = 0; i < this.images.length; i++)
+                        this.images[i]["image"] = "http://localhost/dashboard/images/datahub/" + this.images[i]["image"];
+
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+
+        delProductFromBag: function(product) {
+            axios({
+                method: "delete",
+                url: productInBagApi + product.id
+            })
+                .then( response => {
+                   this.loadProductsInBag();
+                   this.loadImages();
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+    },
+
+    created: function () {
+        setTimeout(function() {
+            order.loadProductsInBag(this.productInBag);
+            order.loadImages(this.images);
+        }, 200);
     }
 });

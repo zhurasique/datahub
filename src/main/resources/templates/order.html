@@ -1,13 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rejestracja - sklepi.pl</title>
+    <title>Podsumowanie - sklepi.pl</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon'/>
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/registration.css">
+    <link rel="stylesheet" type="text/css" href="css/order.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 </head>
@@ -22,35 +24,61 @@
         <div class="sec-wrap">
             <div id="order" class="login">
                 <form method="post">
-                    <h1>Rejestracja</h1>
-                    <div class="block">
-                        <div class="flex justify-content-center" style="align-items: flex-start;">
-                            <img src="img/user.svg">
-                            <div class="block">
+                    <h1>Zamówienie</h1>
+                    <div class="flex space-around">
+                        <div class="block">
+                            <div class="flex justify-content-center" style="align-items: flex-start;">
+                                <img src="img/address.svg" class="form-img">
                                 <div class="block">
-                                    <p>Telefon</p>
-                                    <input type="text" id="phone" name="phone" v-model="phone"/>
+                                    <div class="block">
+                                        <p>Telefon</p>
+                                        <input type="text" id="phone" name="phone" v-model="phone" placeholder="+48 ___ ___ ___"/>
+                                    </div>
+                                    <div class="block pt-15">
+                                        <p>Miasto</p>
+                                        <input type="text" id="city" name="city" v-model="city" placeholder="wpisz miasto"/>
+                                    </div>
+                                    <div class="block pt-15">
+                                        <p>Ulica, dom, numer mieszkania</p>
+                                        <input type="text" id="address" name="address" v-model="address" placeholder="wpisz adres"/>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="flex justify-content-center">
+                                <img src="img/mail.svg" class="form-img">
                                 <div class="block">
-                                    <p>Miasto</p>
-                                    <input type="text" id="city" name="city" v-model="city"/>
-                                </div>
-                                <div class="block">
-                                    <p>Address</p>
-                                    <input type="text" id="address" name="address" v-model="address"/>
+                                    <p>Kod pocztowy</p>
+                                    <input type="text" id="pcode" name="pcode" v-model="pcode" placeholder="__-___"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-content-center">
-                            <img src="img/mail.svg">
-                            <div class="block">
-                                <p>Postal code</p>
-                                <input type="text" id="pcode" name="pcode" v-model="pcode"/>
-                            </div>
+                        <div class="block">
+                            <p>Koszyk:</p>
+                            <table>
+                                <tr>
+                                    <th>Towar</th>
+                                    <th>Cena</th>
+                                </tr>
+                                <tr v-for="(productinbag, indexi) in showedProducts" :key="productinbag.id" class="product">
+                                    <td>
+                                        <div class="flex space-evenly">
+                                            <img id="cross" @click="delProductFromBag(productinbag)" src="img/close.svg">
+                                            <a v-bind:href="links[indexi]">
+                                                <p>{{ productinbag.product.name }}</p>
+                                            </a>
+                                            <a v-bind:href="links[indexi]">
+                                                <img id="prod-img" v-for="(image, index) in images" :key="image.id" v-if="productinbag.product.id == images[index].product.id" v-bind:src="images[index].image" class="prod-img"/>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td><p>{{ productinbag.product.price }}</p></td>
+                                </tr>
+                            </table>
+                            <p class="pt-15">Do zapłaty: <strong>{{ totalPrice }}</strong></p>
                         </div>
                     </div>
                     <div class="form-actions">
-                        <input type="button" class="sub" @click="saveOrder" value="skladam zamowienie"/>
+                        <input type="button" class="sub" @click="saveOrder" value="składam zamówienie"/>
                     </div>
                 </form>
             </div>

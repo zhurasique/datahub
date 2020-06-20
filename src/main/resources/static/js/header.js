@@ -37,7 +37,6 @@ var header = new Vue({
                 url: productInBagApi + "bag?bag=" + this.user.username + "_bag"
             })
                 .then(response => {
-                    console.log(productInBagApi + "bag?bag=" + this.user.username + "_bag");
                     this.bag = response.data;
                 }).catch(error => {
                 console.log(error);

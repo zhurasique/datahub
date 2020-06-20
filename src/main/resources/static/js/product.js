@@ -62,6 +62,7 @@ var product = new Vue({
                 url: productApi + "id?id=" + byId.toString()
             })
                 .then(response => {
+                    console.log(response.data);
                     this.product = response.data;
                 }).catch(error => {
                 console.log(error);

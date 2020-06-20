@@ -51,7 +51,6 @@ public class ProductInOrderController {
         for(int i = 0; i < length; i++){
             ProductInOrder productInOrder = new ProductInOrder();
             productInOrder.setOrder(orderService.findByNumber(number));
-            System.out.println(productInBagService.findByBagName(bag));
             productInOrder.setProduct(productInBagService.findByBagName(bag).get(i).getProduct());
 
             productInOrderService.save(productInOrder);

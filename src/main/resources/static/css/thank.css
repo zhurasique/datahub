@@ -1,0 +1,275 @@
+body{
+	margin:0;
+	padding:0;
+	color:#333;
+}
+
+h1{
+	margin:0 0 25px;
+	padding: 0 5px;
+}
+p{
+	font-size:18px;
+	line-height:1.5em;
+	margin:0 0 15px;
+	padding: 0 5px;
+}
+
+p.last{
+	margin:0;
+}
+
+.accept {
+	float: right;
+	margin: 10px 15px 20px 5.5%;
+	width: 130px;
+	height: 121px;
+}
+
+.accept-img{
+	filter: invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%);
+}
+
+.wrapper {
+	display:table;
+}
+
+.content {
+	display:table-cell;
+	text-align:center;
+}
+
+.frame {
+	text-align:left;
+	margin:20px auto;
+	max-width:680px;
+	padding:7px;
+	z-index:1;
+	position:relative;
+}
+
+.frame h1{
+	color:#ff598a;
+}
+
+.frame p{
+	color:#333;
+}
+
+.table{
+	display:table;
+	width: 100%;
+}
+
+.cell{
+	display:table-cell;
+	padding:0;
+}
+
+.row{
+	display:table-row;
+}
+
+.top {
+	vertical-align:top;
+}
+
+.prod{
+	text-align:center;
+}
+
+.prod img {max-width:170px;
+	float:none;
+	margin:auto;
+	max-height:260px
+}
+
+.welcome{
+	font-size:16px;
+	font-weight:bold;
+}
+
+.table h1 {
+	border-top: 1px solid #333;
+	color:#ff598a;
+	margin: 0;
+	font-size: 18px;
+	padding: 10px 0px 8px 5px;
+}
+.what{
+	width:54%;
+}
+
+.what h3{
+	max-width: 240px;
+	margin-top:5px;
+}
+
+.what .info{
+	width: 63%;
+	vertical-align: middle;
+	padding-bottom:40px;
+}
+
+.details h2{
+	font-weight:normal;
+}
+
+.table h2{
+	font-size: 15px;
+	margin: 0 0 10px 0;
+	padding: 0 5px;
+}
+
+.box{
+	padding: 10px 0;
+	margin-bottom: 10px;
+}
+
+.box p{
+	font-size: 14px;
+	margin: 0;
+	line-height: 1.8em;
+}
+
+.table .info h2 {
+	padding:0 1px;
+}
+
+.table .info h2 span {
+	color:#9a9a9a;
+}
+
+@media all and (max-width:700px){
+	.cell{display:block;}
+	.table .table .cell{display:table-cell;}
+	.what{width:auto;}
+	.info h3{margin: 40px 0 20px;}
+	.info h2{padding:0 2px;}
+}
+@media all and (max-width:400px){
+	.info h3{margin: 10px 0 20px;}
+	.what .info{width:100%;padding:0 10px;}
+	.table .table .cell{display:block;}
+	.table .table .info{text-align:left;}
+	.main {    border-bottom: 1px dotted #CCCBCB;}
+	html{overflow-x: hidden;}
+}
+.main{border-spacing:15px 0;}
+.box2 {padding:10px 15px;}
+.box2 .mid{padding:5px 0;}
+.box2 h3{font-size:14px;font-weight:normal;margin:auto;line-height:25px;padding:5px 0;}
+.what h3{font-family:Arial,sans-serif}
+.left2 {float:left;}
+.right2 {float:right;}
+.frame{max-width:850px;}
+.frame h1,.table h1{color:#ff598a;}
+
+.row {
+	display: table-row;
+}
+.table {
+	display: table;
+	width: 100%;
+}
+
+.main .details,
+.details table {
+	border-spacing: 0;
+}
+
+.details .fit {
+	width: 30%;
+}
+
+.details table {
+	width: 100%;
+}
+
+.main .details .cell {
+	display: table-cell;
+}
+
+.prod>.cell {
+	padding: 15px 0 5px;
+}
+
+.prod img {
+	max-height: 200px;
+	max-width: 140px;
+}
+
+.prod .table .cell {
+	text-align: center;
+}
+
+.details h3 {
+	font-weight: normal;
+	font-size: 1em;
+}
+
+.details {
+	padding-bottom: 10px;
+}
+
+.details .cell {
+	vertical-align: middle;
+}
+
+.details .pad h3 {
+	padding-left: 10px;
+}
+
+.pad-top .cell {
+	padding: 10px 0 0;
+}
+
+.border-top .cell {
+	border-top: 1px solid #333;
+	padding: 10px 2px 8px;
+}
+
+.border-top .cell:first-child {
+	padding: 10px 0 8px 5px
+}
+
+.pad-top .cell {
+	padding-left: 5px;
+}
+
+.details h1 {
+	border: 0;
+	padding: 0;
+}
+
+.details h3 {
+	margin: 0;
+	padding: 7px 10px;
+	text-align: left;
+}
+
+.righ h3 {
+	text-align: right;
+}
+
+.cent,
+.cent h1,
+.cent h3 {
+	text-align: center;
+}
+
+.righ {
+	text-align: right;
+}
+
+@media (max-width:400px) {
+	.prod img {
+		max-width: 100px;
+		max-height: 100px;
+		width: 100%;
+	}
+
+	.main {
+		border-spacing: 10px 0;
+	}
+}
