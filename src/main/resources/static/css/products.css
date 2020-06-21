@@ -91,3 +91,23 @@
     margin-bottom: 10px;
     align-items: baseline;
 }
+
+.pages img{
+    max-width: 40px;
+    filter: invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%);
+}
+
+.pages{
+    width: 120px;
+    max-width: 120px;
+    align-items: center;
+}
+
+.arrow-left{
+    transform: rotate(180deg);
+}
+
+.wrapper h3{
+    margin-top: 15px;
+    margin-right: 15px;
+}

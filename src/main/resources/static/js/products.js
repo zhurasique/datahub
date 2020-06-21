@@ -61,12 +61,15 @@ var products = new Vue({
             sortType: 'sort',
             sortOptions: [
                 { text: 'Najnowsze', value: 'newest' },
+                { text: 'Najstarsze', value: 'oldest' },
                 { text: 'Cena: od najwyższej', value: 'expensive' },
                 { text: 'Cena: od najniższej', value: 'cheap' }
             ],
             filteredProducts: [],
             filteredImages: [],
-            filteredLinks: []
+            filteredLinks: [],
+            pages: 0,
+            page: 0
         }
     },
 
@@ -117,8 +120,7 @@ var products = new Vue({
         },
 
         filterPrice: function (price) {
-            this.loadProducts();
-            this.loadImages();
+            this.showPage();
 
             this.filteredLinks = [];
             this.filteredImages = [];
@@ -150,6 +152,7 @@ var products = new Vue({
         },
 
         sortBy: function (sortType) {
+            this.showPage();
             if(sortType === "expensive"){
                 for(let i = 0; i < this.products.length - 1; i++) {
                     for (let j = 0; j < this.products.length - i - 1; j++) {
@@ -172,14 +175,67 @@ var products = new Vue({
                         }
                     }
                 }
-            }else if(sortType === "newest"){
+            }else if(sortType === "oldest"){
                 this.loadProducts();
+            }else if(sortType === "newest"){
+                this.products.reverse();
+            }
+        },
+
+        splitToPages: function () {
+            if(isInteger(this.products.length/10)){
+                this.pages = Math.trunc(this.products.length/10);
+            }else{
+                this.pages = Math.trunc(this.products.length/10) + 1;
+            }
+        },
+
+        showPage: function(){
+            this.loadProducts();
+            this.loadImages();
+            setTimeout(function() {
+                products.splitToPages();
+
+                let tmp = [];
+                let count = 0;
+
+                if((products.products.length - products.page * 10) > 10){
+                    count = products.page * 10 + 10;
+                }else{
+                    count = products.products.length;
+                }
+
+                for (let i = products.page * 10; i < count; i++) {
+                    tmp.push(products.products[i]);
+                }
+
+                products.products = [];
+
+                for (let i = 0; i < tmp.length; i++) {
+                    products.products.push(tmp[i]);
+                }
+            }, 150);
+        },
+
+        previousPage: function () {
+            if(this.page !== 0){
+                this.page--;
+                this.showPage();
+                addCurrencies();
+            }
+        },
+
+        nextPage: function () {
+            if(this.page + 1 !== this.pages) {
+                console.log(this.page + " " + this.pages);
+                this.page++;
+                this.showPage();
+                addCurrencies();
             }
         }
     },
     created: function () {
-        this.loadProducts(this.products);
-        this.loadImages(this.images);
+        this.showPage();
 
         if(byType !== undefined){
             this.loadCategories(this.categories);
@@ -192,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     document.getElementById("sort").addEventListener("change", function(e) {
         console.log(this.value);
-        if (this.value === "newest") {
+        if (this.value === "oldest") {
             addCurrencies();
         }
     });
