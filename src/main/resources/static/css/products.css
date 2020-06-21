@@ -17,8 +17,10 @@
 }
 
 .products-section{
+    margin: 15px;
     background-color: white;
     padding: 15px;
+    width: 100%;
 }
 
 .showed-product{
@@ -48,4 +50,44 @@
     white-space: nowrap;
     color: #3a4e58;
     font-weight: 800;
+}
+
+.filter-section{
+    padding: 15px;
+    margin-top: 15px;
+    max-width: 500px;
+    width: 500px;
+    background-color: white;
+    height: max-content;
+}
+
+.filter-p{
+    padding-top: 10px;
+    font-size: 18px;
+}
+
+.check input{
+    margin-right: 10px;
+}
+
+.check{
+    align-items: center;
+}
+
+.mt-50{
+    margin-top: 50px;
+}
+
+.flex select{
+    margin-left: 15px;
+    padding: 2px;
+}
+
+.showed-product:hover{
+    background-color: #efefef;
+}
+
+.sort{
+    margin-bottom: 10px;
+    align-items: baseline;
 }

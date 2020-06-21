@@ -43,8 +43,58 @@
 </header>
 
 <div class="main">
-    <div class="wrapper" id="products">
+    <div class="wrapper flex flex-space-between" id="products">
+        <div class="filter-section">
+            <div v-if="byType != undefined">
+                <h2>Podkategorje</h2>
+                <p v-for="category in categories" :key="category.id" class="filter-p">
+                    {{ category.name }}
+                </p>
+            </div>
+                <h2 class="mt-50">Filtruj</h2>
+                <p class="filter-p">Po cenie:</p>
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(20)" value="1" onclick="selectOnlyThis(this)"/>
+                    <p>Do 20 złotych</p>
+                </div>
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(40)" value="2" onclick="selectOnlyThis(this)"/>
+                    <p>Do 40 złotych</p>
+                </div>
+
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(60)" value="3" onclick="selectOnlyThis(this)"/>
+                    <p>Do 60 złotych</p>
+                </div>
+
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(100)" value="4" onclick="selectOnlyThis(this)"/>
+                    <p>Do 100 złotych</p>
+                </div>
+
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(200)" value="5" onclick="selectOnlyThis(this)"/>
+                    <p>Do 200 złotych</p>
+                </div>
+
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(500)" value="6" onclick="selectOnlyThis(this)"/>
+                    <p>Do 500 złotych</p>
+                </div>
+
+                <div class="flex check">
+                    <input type="checkbox" name="myCheckbox" @click="filterPrice(1000)" value="7" onclick="selectOnlyThis(this)"/>
+                    <p>Do 1000 złotych</p>
+                </div>
+        </div>
+
         <div class="products-section">
+            <div class="flex sort">
+                <p>Sortuj: </p>
+                <select name="sortBy" class="sort" id="sort" @change="sortBy(sortType)" v-model="sortType">
+                    <option v-for="item in sortOptions" :value="item.value">{{ item.text }}</option>
+                </select>
+            </div>
             <div class="flex showed-product" v-for="(product, indexi) in products" :key="product.id">
                 <div class="img-block">
                     <a v-bind:href="links[indexi]">
@@ -53,7 +103,7 @@
                 </div>
                 <a v-bind:href="links[indexi]" class="block">
                     <p>{{ product.name }}</p>
-                    <h1 class="price">{{ product.price }}</h1>
+                    <h1 class="price" id="price">{{ product.price }}</h1>
                 </a>
             </div>
         </div>
@@ -62,6 +112,15 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="js/products.js"></script>
+<script>
+    function selectOnlyThis(id){
+        var myCheckbox = document.getElementsByName("myCheckbox");
+        Array.prototype.forEach.call(myCheckbox,function(el){
+            el.checked = false;
+        });
+        id.checked = true;
+    }
+</script>
 <script src="js/loginCheck.js"></script>
 </body>
 </html>
