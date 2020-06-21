@@ -40,11 +40,14 @@
                     <div v-if="typeof bag === 'undefined'">
                         <p>not got</p>
                     </div>
-                    <div v-else>
+                    <div class="block" v-else>
                         <p v-for="product in bag" key="product.id">
                             {{ product.product.name }}
                         </p>
-                        <a id="font-spacing" href="/order">Złóż zamówienie</a>
+                        <div>
+                            <a id="font-spacing" href="/bag">Pokaż koszyk</a>
+                             / <a id="font-spacing" href="/order">Złóż zamówienie</a>
+                        </div>
                     </div>
                 </div>
             </div>

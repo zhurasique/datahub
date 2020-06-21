@@ -1,0 +1,51 @@
+#myorders h1{
+    padding: 10px 0px 10px 30px;
+    letter-spacing: 2px;
+}
+
+.order-bar{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.order{
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid #ff598a;
+    margin: 10px;
+}
+
+#prod-img{
+    max-width: 120px;
+}
+
+table p{
+    max-width: 100px;
+}
+
+table {
+    border-collapse: collapse;
+    max-width: 450px;
+    width: 450px;
+}
+
+td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+.space-evenly{
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#last{
+    padding-top: 15px;
+    text-align: right;
+}
+
+ul{
+    margin-left: 85px;
+}

@@ -1,5 +1,6 @@
 package com.space.datahub.controller;
 
+import com.space.datahub.domain.Order;
 import com.space.datahub.domain.ProductInOrder;
 import com.space.datahub.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,17 @@ public class ProductInOrderController {
     public List<ProductInOrder> orders(@RequestParam String order){
         return productInOrderService.findByOrderNumber(order);
     }
+
+    @GetMapping("/user")
+    public List<ProductInOrder> user(@RequestParam String user){
+        List<Order> listOrder = orderService.findByUserUsername(user);
+        List<ProductInOrder> listProductInOrder = new ArrayList<>();
+        for(int i = 0; i < listOrder.size(); i++){
+            listProductInOrder.addAll(productInOrderService.findByOrderNumber(listOrder.get(i).getNumber()));
+        }
+        return listProductInOrder;
+    }
+
 
     @PostMapping
     public ResponseEntity<?> create(@RequestParam String bag, @RequestParam int length, @RequestParam String number){

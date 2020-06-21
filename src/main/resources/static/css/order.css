@@ -30,10 +30,10 @@ form img {
 }
 
 table {
-    border-collapse: collapse;
-    max-width: 450px;
-    width: 450px;
-}
+     border-collapse: collapse;
+     max-width: 450px;
+     width: 450px;
+ }
 
 td, th {
     border: 1px solid #000000;
