@@ -26,7 +26,7 @@ var departments = new Vue({
                     departmentsId = response.data;
                     for(let i = 0; i < departmentsId.length; i++) {
                         this.images.push("http://localhost/dashboard/images/datahub/" + departmentsId[i].image);
-                        this.links.push("/dzial/" + departmentsId[i].name.toLocaleLowerCase().trim().replace(/ /g, "-"));
+                        this.links.push("/" + departmentsId[i].name.toLocaleLowerCase().trim().replace(/ /g, "-"));
                     }
                 }).catch(error => {
                 console.log(error);

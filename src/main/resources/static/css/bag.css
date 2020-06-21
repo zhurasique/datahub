@@ -1,0 +1,36 @@
+table {
+    border-collapse: collapse;
+    max-width: 750px;
+    width: 750px;
+    color: white;
+}
+
+td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+.space-evenly{
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#cross{
+    max-width: 20px;
+    filter: invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%);
+    cursor: pointer;
+}
+
+#prod-img{
+    max-width: 150px;
+}
+
+table p{
+    max-width: 100px;
+}
+
+table a{
+    text-decoration: none;
+    color: black;
+}

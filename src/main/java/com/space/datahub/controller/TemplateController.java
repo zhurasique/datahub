@@ -27,28 +27,28 @@ public class TemplateController {
         return modelAndView;
     }
 
-    @RequestMapping("/dzial/motoryzacja")
+    @RequestMapping("/motoryzacja")
     public ModelAndView cars () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("cars");
         return modelAndView;
     }
 
-    @RequestMapping("/dzial/elektronika")
+    @RequestMapping("/elektronika")
     public ModelAndView elect () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("elect");
         return modelAndView;
     }
 
-    @RequestMapping("/dzial/moda")
+    @RequestMapping("/moda")
     public ModelAndView pretty () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("pretty");
         return modelAndView;
     }
 
-    @RequestMapping("/dzial/dom-i-ogrod")
+    @RequestMapping("/dom-i-ogrod")
     public ModelAndView house () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("house");
@@ -87,6 +87,13 @@ public class TemplateController {
     public ModelAndView myorders () {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("myorders");
+        return modelAndView;
+    }
+
+    @RequestMapping("/bag")
+    public ModelAndView bag () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("bag");
         return modelAndView;
     }
 

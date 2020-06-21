@@ -41,11 +41,17 @@
                         <p>not got</p>
                     </div>
                     <div class="block" v-else>
-                        <p v-for="product in bag" key="product.id">
-                            {{ product.product.name }}
-                        </p>
-                        <div>
-                            <a id="font-spacing" href="/bag">Pokaż koszyk</a>
+                        <div class="flex bag-prod" v-for="(product, indexi) in bag" key="product.id">
+                            <img id="cross" @click="delProductFromBag(product)" src="img/close.svg">
+                            <a v-bind:href="links[indexi]">
+                                <p>{{ product.product.name }}</p>
+                            </a>
+                            <a v-bind:href="links[indexi]">
+                                <img id="prod-img" v-for="(image, index) in images" :key="image.id" v-if="product.product.id == images[index].product.id" v-bind:src="images[index].image" class="prod-img"/>
+                            </a>
+                        </div>
+                        <div class="under">
+                            <a id="font-spacing" href="/bag">Pokaż szczegóły koszyka</a>
                              / <a id="font-spacing" href="/order">Złóż zamówienie</a>
                         </div>
                     </div>

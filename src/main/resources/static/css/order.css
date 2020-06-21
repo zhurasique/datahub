@@ -59,3 +59,8 @@ td, th {
 table p{
     max-width: 100px;
 }
+
+table a{
+    text-decoration: none;
+    color: black;
+}
