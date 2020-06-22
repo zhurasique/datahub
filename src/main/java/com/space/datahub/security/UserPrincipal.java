@@ -2,6 +2,7 @@ package com.space.datahub.security;
 
 import com.space.datahub.domain.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
+
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + this.user.getRole());
+        authorities.add(authority);
+
         return authorities;
     }
 

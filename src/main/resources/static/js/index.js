@@ -11,7 +11,8 @@ var departments = new Vue({
         return {
             departments: [],
             images: [],
-            links: []
+            links: [],
+            promoted: ''
         }
     },
 
@@ -90,10 +91,139 @@ var types = new Vue({
 });
 
 
+var slider = new Vue({
+    el: "#slider",
+    data: function(){
+        return {
+            products: [],
+            images: [],
+            links: []
+        }
+    },
+
+    methods: {
+        loadProducts: function () {
+            this.products = [];
+            axios({
+                method: "get",
+                url: "/api/product/"
+            })
+                .then(response => {
+                    this.products = response.data;
+                    for(let i = 0; i < this.products.length; i++) {
+                        this.links.push("/product?product=" + this.products[i].id);
+                    }
+                    this.loadImages();
+                }).catch(error => {
+                console.log(error);
+            });
+        },
+
+        loadImages: function(){
+            axios({
+                method: "get",
+                url: "/api/productimage/" + "unique"
+            })
+                .then( response => {
+                    this.images = response.data;
+
+                    for(let i = 0; i < this.images.length; i++)
+                        this.images[i]["image"] = "http://localhost/dashboard/images/datahub/" + this.images[i]["image"];
+
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+    },
+
+    created: function () {
+        this.loadProducts();
+    }
+});
+
+var promoted = new Vue({
+    el: "#promoted",
+    data: function(){
+        return {
+            promoted: '',
+            image: '',
+            link: ''
+        }
+    },
+
+    methods: {
+        loadProducts: function () {
+            this.products = [];
+            axios({
+                method: "get",
+                url: "/api/product/id?id=144"
+            })
+                .then(response => {
+                    this.promoted = response.data;
+                    this.links = "/product?product=" + this.promoted.id;
+
+                    this.loadImages();
+                }).catch(error => {
+                console.log(error);
+            });
+        },
+
+        loadImages: function(){
+            axios({
+                method: "get",
+                url: "/api/productimage/" + "unique"
+            })
+                .then( response => {
+                    let arr = response.data;
+                    for(let i = 0; i < arr.length; i++){
+                        if(this.promoted.id === arr[i].product.id)
+                            this.image = arr[i];
+                    }
+
+                    this.image.image = "http://localhost/dashboard/images/datahub/" + this.image.image;
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+    },
+
+    created: function () {
+        this.loadProducts();
+    }
+});
+
+function isInteger(num) {
+    return (num ^ 0) === num;
+}
+
+
+function addCurrencies(){
+    setTimeout(function() {
+        let val = document.getElementsByClassName("price");
+        for(let i = 0; i < val.length; i++){
+            if(isInteger(val[i].textContent)){
+                val[i].innerHTML = val[i].textContent.toString() + ",00 zł";
+            }else{
+                val[i].innerHTML = val[i].textContent.toString().trim().replace(/\./g,",") + " zł";
+            }
+        }
+    }, 200);
+}
+
 document.addEventListener('DOMContentLoaded', function(){
     setTimeout(function() {
+        addCurrencies()
         let departments = document.getElementsByName("department");
         let type = document.getElementById("types");
+
+        chosenDepartmentId = 2;
+        types.loadTypes();
+        types.loadCategories();
+        type.style.display = "flex";
+        departments[0].style.color = "#ff598a";
+        departments[0].style.filter = "invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%)";
 
         for (let i = 0; i < departments.length; i++) {
             departments[i].addEventListener('mouseover', function()  {
@@ -109,6 +239,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 departments[i].style.filter = "invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%)";
             }, false);
         }
-    }, 100);
+    }, 150);
 });
 

@@ -4,6 +4,7 @@ import com.space.datahub.domain.ProductImage;
 import com.space.datahub.repo.ProductImageRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,8 +24,14 @@ public class ProductImageService {
         return productImageRepository.findByProductName(name);
     }
 
-    public ProductImage findByProductId(long id) {
-        return productImageRepository.findByProductId(id);
+    public List<ProductImage> findByProductId(long id) {
+        List<ProductImage> tmp = findAll();
+        List<ProductImage> productImages = new ArrayList<>();
+        for(int i = 0; i < tmp.size(); i++){
+            if(tmp.get(i).getProduct().getId() == id)
+                productImages.add(tmp.get(i));
+        }
+        return productImages;
     }
 
     public void delete(ProductImage productImage){

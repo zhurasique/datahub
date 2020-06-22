@@ -1,4 +1,3 @@
-let userApi = "/api/user/";
 let productApi = "/api/product/";
 let bagApi = "/api/bag/";
 let productInBagApi = "/api/productinbag/";

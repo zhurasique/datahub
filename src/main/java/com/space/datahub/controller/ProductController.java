@@ -2,8 +2,10 @@ package com.space.datahub.controller;
 
 import com.space.datahub.domain.Category;
 import com.space.datahub.domain.Product;
+import com.space.datahub.domain.ProductImage;
 import com.space.datahub.domain.Type;
 import com.space.datahub.service.CategoryService;
+import com.space.datahub.service.ProductImageService;
 import com.space.datahub.service.ProductService;
 import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,14 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final TypeService typeService;
+    private final ProductImageService productImageService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService, TypeService typeService){
+    public ProductController(ProductService productService, CategoryService categoryService, TypeService typeService, ProductImageService productImageService){
         this.productService = productService;
         this.categoryService = categoryService;
         this.typeService = typeService;
+        this.productImageService = productImageService;
     }
 
     @GetMapping
@@ -92,6 +96,10 @@ public class ProductController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Product product){
+        List<ProductImage> list = productImageService.findByProductId(product.getId());
+        for(int i = 0; i < list.size(); i++) {
+            productImageService.delete(list.get(i));
+        }
         productService.delete(product);
     }
 

@@ -273,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function(){
     addCurrencies();
 
     document.getElementById("sort").addEventListener("change", function(e) {
-        console.log(this.value);
         if (this.value === "oldest") {
             addCurrencies();
         }

@@ -82,6 +82,7 @@ public class ProductImageController {
 
             String productName = productImage.getProduct().getName().replace(" ", "-");
             productName = productName.replace("/", "-");
+            productName = productName.replace("|", "-");
 
             String resultFileName = UUID.randomUUID().toString() + "." + productName + "." + image.get(i).getOriginalFilename();
             image.get(i).transferTo(new File(uploadPath + "/" + resultFileName));
