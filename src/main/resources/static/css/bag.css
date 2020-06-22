@@ -2,7 +2,7 @@ table {
     border-collapse: collapse;
     max-width: 750px;
     width: 750px;
-    color: white;
+    background-color: white;
 }
 
 td, th {

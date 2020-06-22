@@ -32,7 +32,7 @@ var user = new Vue({
         loadUser: function () {
             axios({
                 method: "get",
-                url: userApi + "logged"
+                url: "/api/user/" + "logged"
             })
                 .then(response => {
                     this.user = response.data;

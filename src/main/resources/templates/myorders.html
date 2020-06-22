@@ -22,12 +22,10 @@
             </a>
         </div>
         <div class="search-bar">
-            <form>
-                <div class="flex">
-                    <input type="search" placeholder="czego szukasz?" id="search-input">
-                    <button id="search-button">SZUKAJ</button>
-                </div>
-            </form>
+            <div class="flex">
+                <input type="search" placeholder="czego szukasz?" v-model="searchName" id="search-input">
+                <button @click="search" id="search-button">SZUKAJ</button>
+            </div>
         </div>
         <div class="bag-bar" id="bag">
             <img src="img/bag.png" id="bag-logo">
@@ -40,16 +38,25 @@
                     <div v-if="typeof bag === 'undefined'">
                         <p>not got</p>
                     </div>
-                    <div v-else>
-                        <p v-for="product in bag" key="product.id">
-                            {{ product.product.name }}
-                        </p>
-                        <a id="font-spacing" href="/order">Złóż zamówienie</a>
+                    <div class="block" v-else>
+                        <div class="flex bag-prod" v-for="(product, indexi) in bag" key="product.id">
+                            <img id="cross" @click="delProductFromBag(product)" src="img/close.svg">
+                            <a v-bind:href="links[indexi]">
+                                <p>{{ product.product.name }}</p>
+                            </a>
+                            <a v-bind:href="links[indexi]">
+                                <img id="prod-img" v-for="(image, index) in images" :key="image.id" v-if="product.product.id == images[index].product.id" v-bind:src="images[index].image" class="prod-img"/>
+                            </a>
+                        </div>
+                        <div class="under">
+                            <a id="font-spacing" href="/bag">Pokaż szczegóły koszyka</a>
+                            / <a id="font-spacing" href="/order">Złóż zamówienie</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="login-bar">
+        <div class="login-bar" id="user">
             <img src="img/login.png" id="login-logo">
             <div v-if="typeof user.username !== 'undefined'">
                 <p>{{ user.name }} {{ user.surname }}</p>
@@ -110,9 +117,16 @@
         </div>
     </div>
 </div>
-
+<footer class="flex">
+    <div class="logo-foot">
+        <a href="/">
+            <img src="img/main-head.png">
+        </a>
+    </div>
+</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="js/myorders.js"></script>
 <script src="js/header.js"></script>
+<script src="js/latinize.js"></script>
 </body>
 </html>
