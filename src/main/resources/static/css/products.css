@@ -111,3 +111,18 @@
     margin-top: 15px;
     margin-right: 15px;
 }
+
+.wec{
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.wec p {
+    min-width: 130px;
+}
+
+.next{
+    max-width: 20px !important;
+    filter: invert(51%) sepia(65%) saturate(2480%) hue-rotate(310deg) brightness(101%) contrast(101%);
+}

@@ -1,0 +1,128 @@
+.wrapper{
+    max-width: 1300px !important;
+}
+
+.showSlide {
+    display: none
+}
+
+.showSlide img {
+    width: 100%;
+    max-width: 600px;
+    max-height: 340px;
+}
+
+.slidercontainer {
+    margin: 15px;
+    max-width: 600px;
+    position: relative;
+}
+
+.left, .right {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+}
+
+.right {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.left:hover, .right:hover {
+    background-color: rgba(115, 115, 115, 0.8);
+    border: 1px solid white;
+}
+
+.content {
+    color: #eff5d4;
+    font-size: 30px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.active {
+    background-color: #717171;
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+@-webkit-keyframes fade {
+    from {
+        opacity: .8
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: .8
+    }
+    to {
+        opacity: 1
+    }
+}
+
+.product{
+    background-color: white;
+    margin-top: 10px;
+    justify-content: end;
+}
+
+#order-button{
+    background-color: #ff598a;
+    border: none;
+    color: white;
+    letter-spacing: 2px;
+    padding: 4px 45px;
+    cursor: pointer;
+}
+
+.prod-info{
+    margin: 15px;
+    width: 540px;
+    border-right: 4px solid #ff598a;
+    padding-right: 30px;
+}
+
+.prod-info h2{
+    text-align: right;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.right-d{
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.popup{
+    position: absolute;
+    display: none;
+    left: 40%;
+    border-radius: 5px;
+    top: 10%;
+    padding: 25px;
+    background-color: #00ec00bd;
+}
+
+.popup p{
+    color: white;
+}

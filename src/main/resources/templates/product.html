@@ -8,7 +8,7 @@
     <title>sklepik.pl - atrakcyjne ceny</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon'/>
     <link rel="stylesheet" type="text/css" href="css/header.css">
-    <link rel="stylesheet" type="text/css" href="css/products.css">
+    <link rel="stylesheet" type="text/css" href="css/product.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 </head>
@@ -44,12 +44,30 @@
 
 <div class="main">
     <div class="wrapper" id="products">
-        <div id="product">
-            {{ product.name }}
-            <span style="position: absolute; right: 0"><input type="button" value="X" @click="orderProduct"/></span>
+        <div id="product" class="product flex">
+            <div class="slidercontainer">
+                <div v-for="(image, index) in productImages" class="showSlide fade">
+                    <img  v-bind:src="productImages[index].image"/>
+                </div>
+                <a class="left" onclick="nextSlide(-1)">❮</a>
+                <a class="right" onclick="nextSlide(1)">❯</a>
+            </div>
+            <div class="prod-info">
+                <h1>{{ product.name }}</h1>
+                <h2 class="price">{{ product.price }}</h2>
+                <div class="right-d">
+                    <button id="order-button" @click="orderProduct">ZAMAWIAM</button>
+                </div>
+                <p><strong>Opis towaru:</strong></p>
+                <p> {{ product.description}} </p>
+            </div>
+            <div class="popup" id="popup">
+                <p>Produkt został dodany do koszyka!</p>
+            </div>
         </div>
     </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="js/product.js"></script>

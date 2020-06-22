@@ -55,7 +55,7 @@ public class ProductImageController {
     }
 
     @GetMapping("/product")
-    public List<ProductImage> byBag(String name){
+    public List<ProductImage> byProductName(String name){
         if(name != null && !name.isEmpty()) {
             return productImageService.findByProductName(name);
         }
