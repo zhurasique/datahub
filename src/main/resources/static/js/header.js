@@ -8,7 +8,8 @@ var header = new Vue({
             user : '',
             bag : [],
             images: [],
-            links: []
+            links: [],
+            searchName: ''
         }
     },
 
@@ -78,6 +79,10 @@ var header = new Vue({
             catch( error => {
                 console.log(error);
             });
+        },
+
+        search: function () {
+            document.location.href="/products?search=" + this.searchName
         }
     },
     created: function () {

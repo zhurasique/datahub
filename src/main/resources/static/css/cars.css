@@ -9,7 +9,7 @@
     padding: 10px;
     font-size: 18px;
     max-width: 400px;
-    width: 400px;
+    width: 380px;
 }
 
 #showed-category{
@@ -43,4 +43,9 @@
 #types h1{
     padding: 10px 0px 10px 30px;
     letter-spacing: 2px;
+}
+
+.px{
+    text-decoration: none;
+    color: black;
 }

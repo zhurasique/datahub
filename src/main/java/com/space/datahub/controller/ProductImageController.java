@@ -42,12 +42,10 @@ public class ProductImageController {
         List<ProductImage> productImages = new ArrayList<>();
 
         long id = -1;
-        String name = "";
 
         for (int i = 0; i < tmp.size(); i++) {
-            if (id != tmp.get(i).getProduct().getId() && !name.equals(tmp.get(i).getProduct().getName())) {
+            if (id != tmp.get(i).getProduct().getId()) {
                 id = tmp.get(i).getProduct().getId();
-                name = tmp.get(i).getProduct().getName();
                 productImages.add(tmp.get(i));
             }
         }

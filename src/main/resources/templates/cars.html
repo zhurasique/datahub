@@ -44,7 +44,7 @@
 
 <div class="main">
     <div class="wrapper" id="types">
-        <h1>Motoryzacja</h1>
+        <a v-bind:href="depHref" class="px"><h1>{{ departmentName }}</h1></a>
         <div class="type-bar">
             <div class="block" id="showed-type-category" v-for="(type, index) in types" :key="type.id">
                 <a v-bind:href="types_links[index]" id="type">

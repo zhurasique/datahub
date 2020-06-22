@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,23 +45,23 @@
 
 <div class="main">
     <div class="wrapper" id="types">
-        <h1>{{ departmentName }}</h1>
+        <a v-bind:href="depHref" class="px"><h1>{{ departmentName }}</h1></a>
         <div class="type-bar">
             <div class="block" id="showed-type-category" v-for="(type, index) in types" :key="type.id">
-                <a href="#" id="type">
+                <a v-bind:href="types_links[index]" id="type">
                     <div class="img-bg">
                         <img v-bind:src="images[index]">
                         <h2 id="showed-type">{{ type.name }}</h2>
                     </div>
                 </a>
                 <div id="categories">
-                    <a class="block" v-for="category in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name">
+                    <a class="block" v-for="(category, indexi) in categories" :key="category.id" v-bind:href="categories_links[indexi]" id="showed-category" v-if="type.name == category.type.name">
                         {{ category.name }}
                     </a>
                 </div>
 
                 <div class="all-div">
-                    <a href="#" id="all">Wszystkie kategorie</a>
+                    <a v-bind:href="types_links[index]" id="all">Wszystkie kategorie</a>
                 </div>
             </div>
         </div>

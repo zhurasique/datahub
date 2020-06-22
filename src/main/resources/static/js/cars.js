@@ -10,6 +10,7 @@ var types = new Vue({
             categories: [],
             images: [],
             departmentName: departmentName,
+            depHref: "/products?department=" + departmentName,
             types_links : [],
             categories_links : []
         }
@@ -25,7 +26,7 @@ var types = new Vue({
                 .then(response => {
                     this.types = response.data;
                     for(let i = 0; i < this.types.length; i++) {
-                        this.images.push("../img/" + this.types[i].name.toLocaleLowerCase().trim().replace(/ /g,"-") + ".jpg");
+                        this.images.push("http://localhost/dashboard/images/datahub/" + this.types[i].image);
                         this.types_links.push("/products?type=" + this.types[i].name)
                     }
                 }).catch(error => {

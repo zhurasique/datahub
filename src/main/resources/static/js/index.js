@@ -44,7 +44,9 @@ var types = new Vue({
     data: function(){
         return {
             types: [],
-            categories: []
+            types_links: [],
+            categories: [],
+            categories_links: []
         }
     },
 
@@ -56,7 +58,11 @@ var types = new Vue({
                 url: typeApi + "department/id?id=" + chosenDepartmentId
             })
                 .then(response => {
+                    this.types_links = [];
                     this.types = response.data;
+                    for(let i = 0; i < this.types.length; i++) {
+                        this.types_links.push("/products?type=" + this.types[i].name)
+                    }
                 }).catch(error => {
                 console.log(error);
             });
@@ -68,7 +74,11 @@ var types = new Vue({
                 url: categoryApi
             })
                 .then(response => {
+                    this.categories_links = [];
                     this.categories = response.data;
+                    for(let i = 0; i < this.categories.length; i++) {
+                        this.categories_links.push("/products?category=" + this.categories[i].name)
+                    }
                 }).catch(error => {
                 console.log(error);
             });

@@ -100,8 +100,11 @@
 
                     <div class="flex pages">
                         <img v-if="page != 0" @click="previousPage" src="img/arrow.svg" class="arrow-left"/>
-                        <div class="flex">
+                        <div v-if="pages != 0" class="flex">
                             <p>{{ page+1 }} z {{ pages }}</p>
+                        </div>
+                        <div v-else>
+                            <p>{{ page+1 }} z {{ pages+1 }}</p>
                         </div>
                         <img v-if="page != pages" @click="nextPage" src="img/arrow.svg" class="arrow-right"/>
                     </div>

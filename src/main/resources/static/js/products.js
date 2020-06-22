@@ -32,7 +32,8 @@ function isInteger(num) {
 
 var byType = getParameterByName('type');
 var byCategory = getParameterByName('category');
-var bySearch = getParameterByName('search')
+var bySearch = getParameterByName('search');
+var byDepartment = getParameterByName('department');
 
 var qParam = '';
 var endPoint = '';
@@ -45,6 +46,16 @@ if(byType != null){
 if(byCategory != null) {
     qParam = byCategory.toString();
     endPoint = "category/name?category=";
+}
+
+if(bySearch != null){
+    qParam = bySearch.toString();
+    endPoint = "name?name=";
+}
+
+if(byDepartment != null){
+    qParam = byDepartment.toString();
+    endPoint = "department/name?department=";
 }
 
 var products = new Vue({
@@ -85,7 +96,6 @@ var products = new Vue({
                     for(let i = 0; i < this.products.length; i++) {
                         this.links.push("/product?product=" + this.products[i].id);
                     }
-
                     this.sortBy(this.sortType);
                 }).catch(error => {
                 console.log(error);
@@ -251,7 +261,7 @@ var products = new Vue({
         }
     },
     created: function () {
-        this.showPage();
+        this.loadProducts();
 
         if(byType !== undefined){
             this.loadCategories(this.categories);

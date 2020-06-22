@@ -22,12 +22,10 @@
             </a>
         </div>
         <div class="search-bar">
-            <form>
-                <div class="flex">
-                    <input type="search" placeholder="czego szukasz?" id="search-input">
-                    <button id="search-button">SZUKAJ</button>
-                </div>
-            </form>
+            <div class="flex">
+                <input type="search" placeholder="czego szukasz?" v-model="searchName" id="search-input">
+                <button @click="search" id="search-button">SZUKAJ</button>
+            </div>
         </div>
         <div class="bag-bar" id="bag">
             <img src="img/bag.png" id="bag-logo">
@@ -95,12 +93,12 @@
                 </div>
             </div>
             <div class="type-bar" id="types">
-                <div class="block" id="showed-type-category" v-for="type in types" :key="type.id">
+                <div class="block" id="showed-type-category" v-for="(type, index) in types" :key="type.id">
                     <div id="type">
-                        <a href="#" id="showed-type">{{ type.name }}</a>
+                        <a v-bind:href="types_links[index]" id="showed-type">{{ type.name }}</a>
                     </div>
                     <div id="categories">
-                        <a class="block" v-for="category in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name">
+                        <a class="block" v-for="(category, indexi) in categories" :key="category.id" href="#" id="showed-category" v-if="type.name == category.type.name" v-bind:href="categories_links[indexi]">
                             {{ category.name }}
                         </a>
                     </div>

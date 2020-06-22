@@ -2,8 +2,10 @@ package com.space.datahub.controller;
 
 import com.space.datahub.domain.Category;
 import com.space.datahub.domain.Product;
+import com.space.datahub.domain.Type;
 import com.space.datahub.service.CategoryService;
 import com.space.datahub.service.ProductService;
+import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,13 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final TypeService typeService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService){
+    public ProductController(ProductService productService, CategoryService categoryService, TypeService typeService){
         this.productService = productService;
         this.categoryService = categoryService;
+        this.typeService = typeService;
     }
 
     @GetMapping
@@ -38,9 +42,26 @@ public class ProductController {
     }
 
     @GetMapping("/name")
-    public Product byName(@RequestParam String name){
+    public List<Product> byName(@RequestParam String name){
         if(name != null && !name.isEmpty()) {
             return productService.findByName(name);
+        }
+        return null;
+    }
+
+    @GetMapping("/department/name")
+    public List<Product> byTypeD(@RequestParam String department){
+        if(department != null && !department.isEmpty()) {
+            List<Type> typeList = typeService.findByDepartmentName(department);
+
+            List<Category> categoryList = new ArrayList<>();
+            for(int i = 0; i < typeList.size(); i++)
+                categoryList.addAll(categoryService.findByTypeName(typeList.get(i).getName()));
+
+            List<Product> productsList = new ArrayList<>();
+            for(int i = 0; i < categoryList.size(); i++)
+                productsList.addAll(productService.findByCategoryName(categoryList.get(i).getName()));
+            return productsList;
         }
         return null;
     }

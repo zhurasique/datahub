@@ -21,8 +21,15 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findByName(String name){
-        return productRepository.findByName(name);
+    public List<Product> findByName(String name){
+        List<Product> tmp = findAll();
+        List<Product> productList = new ArrayList<>();
+        for(int i = 0; i < tmp.size(); i++){
+            if(tmp.get(i).getName().equals(name)) {
+                productList.add(tmp.get(i));
+            }
+        }
+        return productList;
     }
 
     public Product findById(long id){
