@@ -58,7 +58,7 @@ var products = new Vue({
             byCategory: byCategory,
             bySearch: bySearch,
             categories: [],
-            sortType: 'sort',
+            sortType: 'oldest',
             sortOptions: [
                 { text: 'Najnowsze', value: 'newest' },
                 { text: 'Najstarsze', value: 'oldest' },
@@ -85,6 +85,8 @@ var products = new Vue({
                     for(let i = 0; i < this.products.length; i++) {
                         this.links.push("/product?product=" + this.products[i].id);
                     }
+
+                    this.sortBy(this.sortType);
                 }).catch(error => {
                 console.log(error);
             });
@@ -127,7 +129,6 @@ var products = new Vue({
             this.filteredProducts = [];
 
             setTimeout(function() {
-
                 for(let i = 0; i < products.products.length; i++){
                     if (products.products[i].price < price){
                         console.log("sliced");
@@ -152,7 +153,7 @@ var products = new Vue({
         },
 
         sortBy: function (sortType) {
-            this.showPage();
+            this.sortType = sortType;
             if(sortType === "expensive"){
                 for(let i = 0; i < this.products.length - 1; i++) {
                     for (let j = 0; j < this.products.length - i - 1; j++) {
@@ -176,7 +177,21 @@ var products = new Vue({
                     }
                 }
             }else if(sortType === "oldest"){
-                this.loadProducts();
+                this.products = [];
+                axios({
+                    method: "get",
+                    url: productApi + endPoint + qParam
+                })
+                    .then(response => {
+                        this.products = response.data;
+                        for(let i = 0; i < this.products.length; i++) {
+                            this.links.push("/product?product=" + this.products[i].id);
+                        }
+                    }).catch(error => {
+                    console.log(error);
+                });
+
+                this.loadImages();
             }else if(sortType === "newest"){
                 this.products.reverse();
             }
@@ -193,6 +208,7 @@ var products = new Vue({
         showPage: function(){
             this.loadProducts();
             this.loadImages();
+
             setTimeout(function() {
                 products.splitToPages();
 
