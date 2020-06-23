@@ -83,11 +83,20 @@
                     <input type="file" ref="file" v-on:change="handleFileUpload()" />
                     <input type="button" value="Save" @click="saveType" style="margin-left: 5px;"/>
                 </div>
+                <div class="flex pages">
+                    <img v-if="page != 0" @click="previousPage" src="img/arrow.svg" class="arrow-left"/>
+                    <div v-if="pages != 0" class="flex">
+                        <p>{{ page+1 }} z {{ pages }}</p>
+                    </div>
+                    <div v-else>
+                        <p>{{ page+1 }} z {{ pages+1 }}</p>
+                    </div>
+                    <img v-if="page != pages" @click="nextPage" src="img/arrow.svg" class="arrow-right"/>
+                </div>
                 <div v-for="type in types" :key="type.id">
                     <div style="position: relative; width: 580px">
                         <div style="margin-top: 20px;">
                             <strong>[{{ type.name }}]</strong>
-                            <span style="position: absolute; right: 0"><input type="button" value="X" @click="delType(type)"/></span>
                             <ul>
                                 <li><strong>ID: </strong> {{ type.id }} </li>
                                 <li><strong>Name:</strong> {{ type.name }} </li>

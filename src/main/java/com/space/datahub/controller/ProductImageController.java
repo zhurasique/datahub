@@ -36,6 +36,21 @@ public class ProductImageController {
         return productImageService.findAll();
     }
 
+    @GetMapping("/slider")
+    public List<ProductImage> slider(@RequestParam List<Long> list){
+        List<ProductImage> unique = unique();
+        List<ProductImage> returned = new ArrayList<>();
+        for(int i = 0; i < unique.size(); i++){
+            for(int j = 0; j < list.size(); j++){
+                if(unique.get(i).getProduct().getId() == list.get(j)){
+                    returned.add(unique.get(i));
+                }
+            }
+        }
+
+        return returned;
+    }
+
     @GetMapping("/unique")
     public List<ProductImage> unique(){
         List<ProductImage> tmp = productImageService.findAll();

@@ -141,7 +141,8 @@ var slider = new Vue({
             products: [],
             category: '',
             images: [],
-            links: []
+            links: [],
+            list: []
         }
     },
 
@@ -156,6 +157,7 @@ var slider = new Vue({
                 .then(response => {
                     this.products = response.data;
                     for(let i = 0; i < this.products.length; i++) {
+                        this.list.push(this.products[i].id);
                         this.links.push("/product?product=" + this.products[i].id);
                     }
 
@@ -168,7 +170,7 @@ var slider = new Vue({
         loadImages: function(){
             axios({
                 method: "get",
-                url: "/api/productimage/" + "unique"
+                url: "/api/productimage/slider?list=" + this.list
             })
                 .then( response => {
                     this.images = response.data;
