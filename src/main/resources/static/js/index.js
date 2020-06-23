@@ -161,7 +161,7 @@ var promoted = new Vue({
             })
                 .then(response => {
                     this.promoted = response.data;
-                    this.links = "/product?product=" + this.promoted.id;
+                    this.link = "/product?product=" + this.promoted.id;
 
                     this.loadImages();
                 }).catch(error => {

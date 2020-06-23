@@ -141,7 +141,6 @@ var products = new Vue({
             setTimeout(function() {
                 for(let i = 0; i < products.products.length; i++){
                     if (products.products[i].price < price){
-                        console.log("sliced");
                         products.filteredProducts.push(products.products[i]);
                         products.filteredImages.push(products.images[i]);
                         products.filteredLinks.push(products.links[i]);
@@ -164,6 +163,7 @@ var products = new Vue({
 
         sortBy: function (sortType) {
             this.sortType = sortType;
+            this.links = [];
             if(sortType === "expensive"){
                 for(let i = 0; i < this.products.length - 1; i++) {
                     for (let j = 0; j < this.products.length - i - 1; j++) {
@@ -205,6 +205,9 @@ var products = new Vue({
             }else if(sortType === "newest"){
                 this.products.reverse();
             }
+
+            for(let i = 0; i < this.products.length; i++)
+                this.links.push("/product?product=" + this.products[i].id);
         },
 
         splitToPages: function () {

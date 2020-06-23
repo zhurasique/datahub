@@ -26,7 +26,7 @@
     width: auto;
     padding: 16px;
     margin-top: -22px;
-    color: white;
+    color: red;
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
@@ -39,8 +39,7 @@
 }
 
 .left:hover, .right:hover {
-    background-color: rgba(115, 115, 115, 0.8);
-    border: 1px solid white;
+    border: 1px solid black;
 }
 
 .content {
@@ -126,4 +125,70 @@
 
 .popup p{
     color: white;
+}
+
+.wrapper2{
+    max-width: 1400px;
+    margin: auto;
+    padding: 1px;
+    position: relative;
+}
+
+.wrapper{
+    width:100%;
+    padding-top: 20px;
+    text-align:center;
+}
+
+.slick-slider{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.carousel{
+    width: 90%;
+    margin: 0 auto;
+}
+.slick-slide{
+    background-color: white;
+    display: block;
+    border: 1px solid #ff598a;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 6px;
+}
+.slick-slide img{
+    width:100%;
+    border: 2px solid #fff;
+}
+
+.autoplay button{
+    background-color: #ff598a;
+    border: none;
+    color: white;
+    letter-spacing: 2px;
+    padding: 3px 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.slick-slide a{
+    text-decoration: none;
+    color: black;
+}
+
+#slider{
+    margin-top: 85px;
+    background-color: white;
+}
+
+#slider h2{
+    padding-top: 15px;
+    margin-left: 15px;
 }

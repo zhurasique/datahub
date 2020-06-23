@@ -1,6 +1,5 @@
 let productApi = "/api/product/";
 let bagApi = "/api/bag/";
-let productInBagApi = "/api/productinbag/";
 let productImageApi = "/api/productimage/";
 
 function getParameterByName(name, url) {
@@ -121,7 +120,7 @@ var product = new Vue({
             formData.append("bag", product.bag[0].name);
 
 
-            axios.post( productInBagApi,
+            axios.post( "/api/productinbag/",
                 formData,
             ).then(response => {
                 this.productInBag.push(response.data);
@@ -132,6 +131,62 @@ var product = new Vue({
     },
     created: function () {
         this.loadProduct(this.product);
+    }
+});
+
+var slider = new Vue({
+    el: "#slider",
+    data: function(){
+        return {
+            products: [],
+            category: '',
+            images: [],
+            links: []
+        }
+    },
+
+    methods: {
+        loadProducts: function () {
+            this.products = [];
+            this.category = product.product.category.name;
+            axios({
+                method: "get",
+                url: "/api/product/category/name?category=" + this.category
+            })
+                .then(response => {
+                    this.products = response.data;
+                    for(let i = 0; i < this.products.length; i++) {
+                        this.links.push("/product?product=" + this.products[i].id);
+                    }
+
+                    this.loadImages();
+                }).catch(error => {
+                console.log(error);
+            });
+        },
+
+        loadImages: function(){
+            axios({
+                method: "get",
+                url: "/api/productimage/" + "unique"
+            })
+                .then( response => {
+                    this.images = response.data;
+
+                    for(let i = 0; i < this.images.length; i++)
+                        this.images[i]["image"] = "http://localhost/dashboard/images/datahub/" + this.images[i]["image"];
+
+                }).
+            catch( error => {
+                console.log(error);
+            });
+        },
+    },
+
+    created: function () {
+        setTimeout(function() {
+            slider.loadProducts();
+        }, 200);
     }
 });
 
@@ -169,7 +224,7 @@ setTimeout(function() {
             val[i].innerHTML = val[i].textContent.toString().trim().replace(/\./g,",") + " zł";
         }
     }
-}, 200);
+}, 320);
 
 function showPopup() {
     let popup = document.getElementById("popup");

@@ -116,11 +116,11 @@
 }
 
 .wrapper2{
-    max-width: 1700px;
-    margin: auto;
-    padding: 1px;
-    position: relative;
-}
+     max-width: 1700px;
+     margin: auto;
+     padding: 1px;
+     position: relative;
+ }
 
 .wrapper{
     width:100%;
@@ -205,3 +205,4 @@
 .promoted img{
     max-width: 350px;
 }
+
