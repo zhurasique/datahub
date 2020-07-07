@@ -1,34 +1,25 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.Type;
-import com.space.datahub.service.DepartmentService;
 import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/type")
 public class TypeController {
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
     private final TypeService typeService;
-    private final DepartmentService departmentService;
 
     @Autowired
-    public TypeController(TypeService typeService, DepartmentService departmentService) {
+    public TypeController(TypeService typeService) {
         this.typeService = typeService;
-        this.departmentService = departmentService;
     }
 
     @GetMapping
@@ -38,22 +29,12 @@ public class TypeController {
 
     @GetMapping("/name")
     public Type byName(@RequestParam String name){
-        Type type = null;
-        if(name != null && !name.isEmpty()) {
-            type = typeService.findByName(name);
-            return type;
-        }
-        return null;
+        return typeService.findByName(name);
     }
 
     @GetMapping("/department/name")
     public List<Type> byType(@RequestParam String department){
-        List<Type> types = null;
-        if(department != null && !department.isEmpty()) {
-            types = typeService.findByDepartmentName(department);
-            return types;
-        }
-        return null;
+       return typeService.findByDepartmentName(department);
     }
 
     @GetMapping("/department/id")
@@ -68,31 +49,6 @@ public class TypeController {
 
     @PostMapping(headers = {"Content-Type=multipart/form-data"})
     public ResponseEntity<?> create(@RequestParam String name, @RequestParam String department, @RequestParam MultipartFile image) throws IOException {
-        if(byName(name) != null)
-            return new ResponseEntity<>(department, HttpStatus.INTERNAL_SERVER_ERROR);
-        else {
-            Type type = new Type();
-            type.setName(name);
-            type.setDepartment(departmentService.findByName(department));
-
-            if(image != null){
-                File uploadDir = new File(uploadPath);
-
-                if(!uploadDir.exists()){
-                    uploadDir.mkdir();
-                }
-
-                String typeName = type.getName().replace(" ", "-");
-                typeName = typeName.replace("/", "-");
-
-                String resultFileName = UUID.randomUUID().toString() + "." + typeName + "." + image.getOriginalFilename();
-                image.transferTo(new File(uploadPath + "/" + resultFileName));
-
-                type.setImage(resultFileName);
-            }
-
-            typeService.save(type);
-            return new ResponseEntity<>(type, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(typeService.save(name, department, image), HttpStatus.OK);
     }
 }

@@ -27,7 +27,8 @@
                 <button @click="search" id="search-button">SZUKAJ</button>
             </div>
         </div>
-        <div class="bag-bar" id="bag"><a href="/bag">
+        <div class="bag-bar" id="bag">
+            <a href="/bag">
                 <img src="img/bag.png" id="bag-logo">
                 <p>Twój koszyk</p>
             </a>
@@ -81,7 +82,7 @@
 </header>
 <div class="main">
     <div class="wrapper">
-        <h1 id="user">Moje zamówienia</h1>
+        <h1 id="logged">Moje zamówienia</h1>
 
         <div class="order-bar" id="info">
             <div class="order" v-for="order in orders" :key="order.id">
@@ -103,7 +104,7 @@
                         <td>
                             <div class="flex space-evenly">
                                 <a v-bind:href="links[index]">
-                                    <img id="prod-img" v-if="product.product.id == images[index].product.id" v-bind:src="images[index].image"/>
+                                    <img id="prod-img" v-if="product.id == images[index].product.id" v-bind:src="images[index].image"/>
                                 </a>
                                 <a v-bind:href="links[index]">
                                     <p>{{ product.product.name }}</p>

@@ -29,19 +29,12 @@ public class CategoryController {
 
     @GetMapping("/name")
     public Category byName(@RequestParam String name){
-        Category category = null;
-        if(name != null && !name.isEmpty()) {
-            category = categoryService.findByName(name);
-            return category;
-        }
-        return null;
+       return categoryService.findByName(name);
     }
 
     @GetMapping("/type/name")
     public List<Category> byType(@RequestParam String type){
-        if(type != null && !type.isEmpty())
-            return categoryService.findByTypeName(type);
-        return null;
+        return categoryService.findByTypeName(type);
     }
 
     @GetMapping("/type/id")
@@ -56,15 +49,6 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestParam String name, @RequestParam String type){
-        if(byName(name) != null)
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
-        else {
-            Category category = new Category();
-            category.setName(name);
-            category.setType(typeService.findByName(type));
-
-            categoryService.save(category);
-            return new ResponseEntity<>(category, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(categoryService.save(name, type), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -1,20 +1,12 @@
 package com.space.datahub.controller;
 
-import com.space.datahub.domain.Category;
 import com.space.datahub.domain.Product;
-import com.space.datahub.domain.ProductImage;
-import com.space.datahub.domain.Type;
-import com.space.datahub.service.CategoryService;
-import com.space.datahub.service.ProductImageService;
 import com.space.datahub.service.ProductService;
-import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,16 +14,10 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final CategoryService categoryService;
-    private final TypeService typeService;
-    private final ProductImageService productImageService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService, TypeService typeService, ProductImageService productImageService){
+    public ProductController(ProductService productService){
         this.productService = productService;
-        this.categoryService = categoryService;
-        this.typeService = typeService;
-        this.productImageService = productImageService;
     }
 
     @GetMapping
@@ -41,52 +27,27 @@ public class ProductController {
 
     @GetMapping("/id")
     public Product byProductId(@RequestParam String id){
-        long parsedId = Long.parseLong(id);
-        return productService.findById(parsedId);
+        return productService.findById(id);
     }
 
     @GetMapping("/name")
     public List<Product> byName(@RequestParam String name){
-        if(name != null && !name.isEmpty()) {
-            return productService.findByName(name);
-        }
-        return null;
+        return productService.findByName(name);
     }
 
     @GetMapping("/department/name")
     public List<Product> byTypeD(@RequestParam String department){
-        if(department != null && !department.isEmpty()) {
-            List<Type> typeList = typeService.findByDepartmentName(department);
-
-            List<Category> categoryList = new ArrayList<>();
-            for(int i = 0; i < typeList.size(); i++)
-                categoryList.addAll(categoryService.findByTypeName(typeList.get(i).getName()));
-
-            List<Product> productsList = new ArrayList<>();
-            for(int i = 0; i < categoryList.size(); i++)
-                productsList.addAll(productService.findByCategoryName(categoryList.get(i).getName()));
-            return productsList;
-        }
-        return null;
+        return productService.byTypeD(department);
     }
 
     @GetMapping("/type/name")
     public List<Product> byTypeS(@RequestParam String type){
-        if(type != null && !type.isEmpty()) {
-            List<Category> categoryList = categoryService.findByTypeName(type);
-            List<Product> productsList = new ArrayList<>();
-            for(int i = 0; i < categoryList.size(); i++)
-                productsList.addAll(productService.findByCategoryName(categoryList.get(i).getName()));
-            return productsList;
-        }
-        return null;
+        return productService.byTypeS(type);
     }
 
     @GetMapping("/category/name")
     public List<Product> byType(@RequestParam String category){
-        if(category != null && !category.isEmpty())
-            return productService.findByCategoryName(category);
-        return null;
+        return productService.findByCategoryName(category);
     }
 
     @GetMapping("/category/id")
@@ -94,24 +55,8 @@ public class ProductController {
         return productService.findByCategoryId(id);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Product product){
-        List<ProductImage> list = productImageService.findByProductId(product.getId());
-        for(int i = 0; i < list.size(); i++) {
-            productImageService.delete(list.get(i));
-        }
-        productService.delete(product);
-    }
-
     @PostMapping
-    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String description, @RequestParam String category) throws IOException {
-        Product product = new Product();
-        product.setName(name);
-        product.setPrice(price);
-        product.setDescription(description);
-        product.setCategory(categoryService.findByName(category));
-
-        productService.save(product);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestParam String name, @RequestParam double price, @RequestParam String description, @RequestParam String category) {
+        return new ResponseEntity<>(productService.save(name, price, description, category), HttpStatus.OK);
     }
 }

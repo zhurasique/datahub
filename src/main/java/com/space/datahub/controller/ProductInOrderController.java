@@ -1,6 +1,5 @@
 package com.space.datahub.controller;
 
-import com.space.datahub.domain.Order;
 import com.space.datahub.domain.ProductInOrder;
 import com.space.datahub.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,18 +14,10 @@ import java.util.List;
 public class ProductInOrderController {
 
     private final ProductInOrderService productInOrderService;
-    private final OrderService orderService;
-    private final BagService bagService;
-    private final ProductService productService;
-    private final ProductInBagService productInBagService;
 
     @Autowired
-    public ProductInOrderController(ProductInOrderService productInOrderService, OrderService orderService, BagService bagService, ProductService productService, ProductInBagService productInBagService) {
+    public ProductInOrderController(ProductInOrderService productInOrderService) {
         this.productInOrderService = productInOrderService;
-        this.orderService = orderService;
-        this.bagService = bagService;
-        this.productService = productService;
-        this.productInBagService = productInBagService;
     }
 
     @GetMapping
@@ -47,34 +37,11 @@ public class ProductInOrderController {
 
     @GetMapping("/user")
     public List<ProductInOrder> user(@RequestParam String user){
-        List<Order> listOrder = orderService.findByUserUsername(user);
-        List<ProductInOrder> listProductInOrder = new ArrayList<>();
-        for(int i = 0; i < listOrder.size(); i++){
-            listProductInOrder.addAll(productInOrderService.findByOrderNumber(listOrder.get(i).getNumber()));
-        }
-        return listProductInOrder;
+        return productInOrderService.user(user);
     }
-
 
     @PostMapping
     public ResponseEntity<?> create(@RequestParam String bag, @RequestParam int length, @RequestParam String number){
-        List<ProductInOrder> productsInOrder = new ArrayList<>();
-
-        for(int i = 0; i < length; i++){
-            ProductInOrder productInOrder = new ProductInOrder();
-            productInOrder.setOrder(orderService.findByNumber(number));
-            productInOrder.setProduct(productInBagService.findByBagName(bag).get(i).getProduct());
-
-            productInOrderService.save(productInOrder);
-            productsInOrder = productInOrderService.findByOrderNumber(number);
-        }
-
-        for(int i = 0; i < length; i++){
-            productInBagService.delete(productInBagService.findByBagName(bag).get(0));
-        }
-
-        bagService.delete(bagService.findByName(bag));
-
-        return new ResponseEntity<>(productsInOrder, HttpStatus.OK);
+        return new ResponseEntity<>(productInOrderService.save(bag, length, number), HttpStatus.OK);
     }
 }

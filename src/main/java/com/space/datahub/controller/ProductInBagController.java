@@ -1,9 +1,7 @@
 package com.space.datahub.controller;
 
 import com.space.datahub.domain.ProductInBag;
-import com.space.datahub.service.BagService;
 import com.space.datahub.service.ProductInBagService;
-import com.space.datahub.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +14,10 @@ import java.util.List;
 public class ProductInBagController {
 
     private final ProductInBagService productInBagService;
-    private final ProductService productService;
-    private final BagService bagService;
 
     @Autowired
-    public ProductInBagController(ProductInBagService productInBagService, ProductService productService, BagService bagService) {
+    public ProductInBagController(ProductInBagService productInBagService) {
         this.productInBagService = productInBagService;
-        this.productService = productService;
-        this.bagService = bagService;
     }
 
     @GetMapping
@@ -33,10 +27,7 @@ public class ProductInBagController {
 
     @GetMapping("/bag")
     public List<ProductInBag> byBag(String bag){
-        if(bag != null && !bag.isEmpty()) {
-            return productInBagService.findByBagName(bag);
-        }
-        return null;
+        return productInBagService.findByBagName(bag);
     }
 
     @DeleteMapping("{id}")
@@ -46,12 +37,6 @@ public class ProductInBagController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestParam String product, @RequestParam String bag){
-        ProductInBag productInBag = new ProductInBag();
-        productInBag.setBag(bagService.findByName(bag));
-
-        long parsedId = Long.parseLong(product);
-        productInBag.setProduct(productService.findById(parsedId));
-        productInBagService.save(productInBag);
-        return new ResponseEntity<>(productInBag, HttpStatus.OK);
+        return new ResponseEntity<>(productInBagService.save(product, bag), HttpStatus.OK);
     }
 }

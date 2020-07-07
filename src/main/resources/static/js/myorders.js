@@ -6,8 +6,8 @@ function isInteger(num) {
     return (num ^ 0) === num;
 }
 
-var user = new Vue({
-    el: "#user",
+var logged = new Vue({
+    el: "#logged",
     data: function(){
         return {
             user : ''
@@ -48,29 +48,28 @@ var info = new Vue({
         loadOrder: function () {
             axios({
                 method: "get",
-                url: orderApi + "user?user=" +user.user.username
+                url: orderApi + "user?user=" + logged.user.username
             })
-                .then( response => {
+                .then(response => {
                     this.orders = response.data;
-                }).
-            catch( error => {
+                }).catch(error => {
                 console.log(error);
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 info.loadProductsInOrder();
             }, 200);
         },
 
-        loadProductsInOrder: function(){
+        loadProductsInOrder: function () {
             axios({
                 method: "get",
-                url: productInOrderApi + "user?user=" + user.user.username
+                url: productInOrderApi + "user?user=" + logged.user.username
             })
-                .then( response => {
+                .then(response => {
                     this.totalPrice = 0;
                     this.productInOrders = response.data;
-                    for(let i = 0; i < this.productInOrders.length; i++) {
+                    for (let i = 0; i < this.productInOrders.length; i++) {
                         this.totalPrice = this.totalPrice + parseFloat(this.productInOrders[i]["product"]["price"]);
                         if (isInteger(this.productInOrders[i]["product"]["price"])) {
                             this.productInOrders[i]["product"]["price"] = this.productInOrders[i]["product"]["price"].toString() + ",00 zł";
@@ -86,39 +85,31 @@ var info = new Vue({
                     }
 
                     this.loadImages();
-                }).
-            catch( error => {
+                }).catch(error => {
                 console.log(error);
             });
         },
 
-        loadImages: function(){
+        loadImages: function () {
             axios({
                 method: "get",
                 url: productImagesApi + "unique"
             })
-                .then( response => {
+                .then(response => {
                     this.images = response.data;
 
-                    for(let i = 0; i < this.images.length; i++)
+                    for (let i = 0; i < this.images.length; i++)
                         this.images[i]["image"] = "http://localhost/dashboard/images/datahub/" + this.images[i]["image"];
 
-                }).
-            catch( error => {
+                }).catch(error => {
                 console.log(error);
             });
         },
-
-        loadInfo: function () {
-            this.loadOrder();
-
-            setTimeout(function () {
-                info.loadOrder();
-            }, 200);
-        }
     },
 
     created: function() {
-        this.loadInfo();
+        setTimeout(function () {
+            info.loadOrder();
+        }, 200);
     }
 });
