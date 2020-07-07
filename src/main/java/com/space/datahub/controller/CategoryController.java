@@ -2,7 +2,6 @@ package com.space.datahub.controller;
 
 import com.space.datahub.domain.Category;
 import com.space.datahub.service.CategoryService;
-import com.space.datahub.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +13,10 @@ import java.util.List;
 @RequestMapping("api/category")
 public class CategoryController {
     private final CategoryService categoryService;
-    private final TypeService typeService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, TypeService typeService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.typeService = typeService;
     }
 
     @GetMapping
