@@ -30,6 +30,7 @@ public class CategoryService {
     }
 
     public List<Category> findByTypeName(String type){
+        System.out.println(categoryRepository.findByTypeName(type));
         if(type != null && !type.isEmpty())
             return categoryRepository.findByTypeName(type);
         return null;

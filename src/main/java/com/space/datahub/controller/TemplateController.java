@@ -1,14 +1,11 @@
 package com.space.datahub.controller;
 
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
-public class TemplateController implements ErrorController {
+public class TemplateController {
     @RequestMapping("/")
     public ModelAndView index () {
         ModelAndView modelAndView = new ModelAndView();
@@ -16,15 +13,15 @@ public class TemplateController implements ErrorController {
         return modelAndView;
     }
 
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
-
-    @RequestMapping("/error")
-    public String handleError(HttpServletRequest request) {
-        return "404";
-    }
+//    @Override
+//    public String getErrorPath() {
+//        return "/error";
+//    }
+//
+//    @RequestMapping("/error")
+//    public String handleError(HttpServletRequest request) {
+//        return "404";
+//    }
 
     @RequestMapping("/login")
     public ModelAndView login () {

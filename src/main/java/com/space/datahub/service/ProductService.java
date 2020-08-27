@@ -39,6 +39,11 @@ public class ProductService {
         }
         return null;
     }
+    public List<Product> findByCategoryName(String category){
+        if(category != null && !category.isEmpty())
+            return productRepository.findByCategoryName(category);
+        return null;
+    }
 
     public List<Product> byTypeD(String department){
         if(department != null && !department.isEmpty()) {
@@ -56,7 +61,7 @@ public class ProductService {
         return null;
     }
 
-    public List<Product> byTypeS( String type){
+    public List<Product> byTypeS(String type){
         if(type != null && !type.isEmpty()) {
             List<Category> categoryList = categoryService.findByTypeName(type);
             List<Product> productsList = new ArrayList<>();
@@ -84,12 +89,6 @@ public class ProductService {
             product.add(opt);
         });
         return product.get(0);
-    }
-
-    public List<Product> findByCategoryName(String category){
-        if(category != null && !category.isEmpty())
-            return findByCategoryName(category);
-        return null;
     }
 
     public List<Product> findByCategoryId(long id) {
